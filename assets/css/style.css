@@ -962,10 +962,6 @@ button:focus {
 /*--------------------*/
 
 #mu-register {
-	background-image: url("../images/register-bg.jpg");
-	background-position: center center;
-	background-size: cover;
-	background-attachment: fixed;
 	display: inline;
 	float: left;
 	position: relative;
@@ -973,7 +969,6 @@ button:focus {
 }
 
 #mu-register::before {
-	background: rgba(0,0,0,0.9);
 	bottom: 0;
 	content: '';
 	left: 0;
