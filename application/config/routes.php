@@ -1,8 +1,11 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
+
+$route['dashboard'] = 'user';
 $route['masuk'] = 'user/login';
 $route['daftar']= 'user/daftar';
+$route['ganti_password'] = 'user/ganti_pass';
 
 $route['default_controller'] = 'home';
 $route['404_override'] = '';

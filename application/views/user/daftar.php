@@ -65,7 +65,7 @@
                   </div>
                 </div>
 
-                <input type="submit" id="daftar" class="mu-reg-submit-btn" name="daftar" value="DAFTAR">
+                <input type="submit" id="btn" class="mu-reg-submit-btn" name="daftar" value="DAFTAR">
               </form>
             </div>
 
