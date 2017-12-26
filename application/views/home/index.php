@@ -53,6 +53,7 @@
 	            <li><a href="#mu-speakers">Pembicara</a></li>
 	            <li><a href="#mu-pricing">Tiket</a></li>
 	            <li><a href="#mu-sponsors">Sponsor</a></li>
+              <li><a href="<?= site_url('masuk'); ?>">Masuk <i class="fa fa-sign-in"></i></a></li>
 		      	</ul>
 		    </div><!-- /.navbar-collapse -->
 	  	</div><!-- /.container-fluid -->
@@ -359,7 +360,7 @@
 											<li>Free Snack</li>
                       <li>Expo Kampus</li>
 										</ul>
-										<a class="mu-register-btn" href="#"> Daftar</a>
+										<a class="mu-register-btn" href="<?= site_url('daftar'); ?>"> Daftar</a>
 									</div>
 								</div>
 								<!-- / single price item -->
@@ -379,7 +380,7 @@
                       <li>Expo Kampus</li>
                       <li>Talkshow</li>
 										</ul>
-										<a class="mu-register-btn" href="#"> Daftar</a>
+										<a class="mu-register-btn" href="<?= site_url('daftar'); ?>"> Daftar</a>
 									</div>
 								</div>
 								<!-- / single price item -->
