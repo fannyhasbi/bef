@@ -59,7 +59,6 @@ class User extends CI_Controller {
   }
 
   public function logout(){
-    $this->cekLogin();
     $this->session->sess_destroy();
     redirect(site_url());
   }
