@@ -23,7 +23,7 @@
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
   <![endif]-->
 </head>
-<body style="background-color: rgba(0,0,0,0.9)">
+<body style="background-color: rgba(55,198,245,1)">
 <!-- Start main content -->
 <main role="main">
   <!-- Start Register  -->
@@ -33,16 +33,18 @@
         <div class="col-md-12">
           <div class="mu-register-area">
             <div class="mu-title-area">
-              <h2 class="mu-title">Pendaftaran BEF 2018</h2>
+              <h2 class="mu-title">Pendaftaran <a href="<?= site_url(); ?>">BEF 2018</a></h2>
               <p>Sudah punya akun? Masuk <a href="<?= site_url('masuk'); ?>">disini</a></p>
             </div>
 
             <div class="mu-register-content">
               <form class="mu-register-form" id="form-daftar" action="" method="post">
+                <?= $message; ?>
+
                 <div class="row">
                   <div class="col-md-12">
                     <div class="form-group">
-                      <input type="text" class="form-control" placeholder="Nama Lengkap" name="nama" required>
+                      <input type="text" class="form-control" placeholder="Nama Lengkap" name="nama" required autofocus>
                     </div>
                   </div>
 

@@ -3,8 +3,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 
 $route['dashboard'] = 'user';
-$route['masuk'] = 'user/login';
 $route['daftar']= 'user/daftar';
+$route['masuk'] = 'user/login';
+$route['keluar']= 'user/logout';
+$route['pay'] = 'user/pay';
 $route['ganti_password'] = 'user/ganti_pass';
 
 $route['default_controller'] = 'home';
