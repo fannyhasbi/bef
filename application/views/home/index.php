@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Brebes Education Fair 2018</title>
 
-  <link rel="shortcut icon" type="image/icon" href="<?= base_url();?>/assets/images/favicon.ico"/>
+  <!-- <link rel="shortcut icon" type="image/icon" href="<?= base_url();?>/assets/images/favicon.ico"/> -->
   <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
   <link href="<?= base_url();?>/assets/css/bootstrap.min.css" rel="stylesheet">
   <link href="<?= base_url();?>/assets/css/slick.css" rel="stylesheet">

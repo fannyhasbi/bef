@@ -1,3 +1,7 @@
+<?php
+$load = $this->db->query("SELECT COUNT(id) AS total FROM pendaftar WHERE bukti IS NOT NULL AND id NOT IN (SELECT id_pendaftar FROM konfirmasi);");
+$label = $load->row()->total;
+?>
 <!doctype html>
 <html lang="en">
 <head>
@@ -50,14 +54,20 @@
       <ul class="nav">
         <li <?= uri_string() == 'me' ? 'class="active"' : ''; ?>>
           <a href="<?= site_url('me'); ?>">
+            <i class="material-icons">dashboard</i>
+            <p>Dashboard</p>
+          </a>
+        </li>
+        <li <?= uri_string() == 'me/konfirmasi' ? 'class="active"' : ''; ?>>
+          <a href="<?= site_url('me/konfirmasi'); ?>">
             <i class="material-icons">check_circle</i>
-            <p>Konfirmasi</p>
+            <p>Konfirmasi &nbsp; <span class="label <?= $label==0 ? 'label-success' : 'label-danger' ?>"><?= $label; ?></span></p>
           </a>
         </li>
         <li <?= uri_string() == 'me/ganti_password' ? 'class="active"' : ''; ?>>
           <a href="<?= site_url('me/ganti_password'); ?>">
             <i class="material-icons">vpn_key</i>
-            <p>Ganti Password</p>
+            <p>Ubah Password</p>
           </a>
         </li>
         <li>
@@ -120,6 +130,36 @@ $(document).ready(function(){
     });
   }
 });
+
+<?php if(uri_string() == 'me'){ ?>
+
+dataDailySalesChart = {
+  labels: ['M', 'T', 'W', 'T', 'F', 'S', 'S'],
+  series: [
+    [12, 17, 7, 17, 23, 18, 38],
+    [20, 13, 2, 5, 14, 20, 12]
+  ]
+};
+
+optionsDailySalesChart = {
+  lineSmooth: Chartist.Interpolation.cardinal({
+    tension: 0
+  }),
+  low: 0,
+  high: 50,
+  chartPadding: {
+    top: 0,
+    right: 0,
+    bottom: 0,
+    left: -10
+  },
+}
+
+var dailySalesChart = new Chartist.Line('#dailySalesChart', dataDailySalesChart, optionsDailySalesChart);
+
+md.startAnimationForLineChart(dailySalesChart);
+
+<?php } ?>
 </script>
 </body>
 </html>

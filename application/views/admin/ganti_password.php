@@ -27,7 +27,7 @@
               </div>
             </div>
 
-            <input type="submit" id="btn" class="btn btn-primary pull-right" name="ganti" value="Ganti Password">
+            <input type="submit" id="btn" class="btn btn-primary pull-right" name="ganti" value="Ubah Password">
             <div class="clearfix"></div>
 
           </form>

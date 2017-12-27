@@ -15,6 +15,7 @@ $route['me'] = 'admin';
 $route['me/login'] = 'admin/login';
 $route['me/ganti_password'] = 'admin/ganti_pass';
 $route['me/confirm/(:num)'] = 'admin/confirm/$1';
+$route['me/konfirmasi'] = 'admin/konfirmasi';
 
 $route['default_controller'] = 'home';
 $route['404_override'] = '';

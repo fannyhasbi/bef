@@ -10,12 +10,10 @@ class Admin extends CI_Controller {
   public function index(){
     $this->cekLogin();
 
-    $data['bukti'] = $this->admin_model->getBukti();
-    
     $data['message'] = $this->session->flashdata('msg');
     $data['type'] = $this->session->flashdata('type');
 
-    $data['view_name'] = 'konfirmasi';
+    $data['view_name'] = 'home';
     $this->load->view('admin/index_view', $data);
   }
 
@@ -83,7 +81,21 @@ class Admin extends CI_Controller {
     redirect(site_url('me'));
   }
 
+  public function konfirmasi(){
+    $this->cekLogin();
+
+    $data['bukti'] = $this->admin_model->getBukti();
+    
+    $data['message'] = $this->session->flashdata('msg');
+    $data['type'] = $this->session->flashdata('type');
+
+    $data['view_name'] = 'konfirmasi';
+    $this->load->view('admin/index_view', $data);
+  }
+
   public function ganti_pass(){
+    $this->cekLogin();
+
     if($this->input->post('ganti')){
       if($this->admin_model->updatePass($this->input->post('password'))){
         $this->session->set_flashdata('msg', 'Password berhasil diperbarui.');
