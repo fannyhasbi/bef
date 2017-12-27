@@ -38,6 +38,42 @@ class Admin_model extends CI_Model {
     return $this->db->get_where('pendaftar', ['id' => $id]);
   }
 
+  public function addConfirm($id_pendaftar){
+    $data = array(
+      'id_admin' => $this->session->userdata('id_admin'),
+      'id_pendaftar' => $id_pendaftar,
+      'tgl' => date('Y-m-d H:i:s')
+    );
+
+    if($this->db->insert('konfirmasi', $data))
+      return true;
+    else
+      return false;
+  }
+
+  public function addPeserta($id_pendaftar, $no_peserta){
+    $data = array(
+      'no_peserta' => $no_peserta,
+      'id_pendaftar' => $id_pendaftar
+    );
+
+    if($this->db->insert('peserta', $data)){
+      return true;
+    }
+    else {
+      return false;
+    }
+  }
+
+  public function updatePass($new){
+    $new = password_hash($new, PASSWORD_BCRYPT);
+    $this->db->where('id', $this->session->userdata('id_admin'));
+    if($this->db->update('admin', ['password' => $new]))
+      return true;
+    else
+      return false;
+  }
+
   public function getAdmin(){
     $data = array(
       'username' => $this->purify($this->input->post('username'))
@@ -51,26 +87,8 @@ class Admin_model extends CI_Model {
     return $q->result();
   }
 
-  public function addConfirm($id_pendaftar){
-    $data = array(
-      'id_admin' => $this->session->userdata('uname_admin'),
-      'id_pendaftar' => $id_pendaftar,
-      'tgl' => date('Y-m-d H:i:s')
-    );
-
-    if($this->db->insert('konfirmasi', $data))
-      return true;
-    else
-      return false;
+  public function getLastPeserta(){
+    $q = $this->db->query("SELECT no_peserta FROM peserta ORDER BY no_peserta DESC LIMIT 0, 1");
+    return $q->row();
   }
-
-  public function updatePass($new){
-    $new = password_hash($new, PASSWORD_BCRYPT);
-    $this->db->where('id', $this->session->userdata('id_admin'));
-    if($this->db->update('admin', ['password' => $new]))
-      return true;
-    else
-      return false;
-  }
-
 }

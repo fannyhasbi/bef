@@ -23,6 +23,16 @@ class User extends CI_Controller {
       redirect(site_url('masuk'));
   }
 
+  private function generateBukti(){
+    $bukti = "";
+    $n = "1234567890";
+    for($i=0;$i<5;$i++){
+      $bukti .= $n[rand(0, strlen($n) - 1)];
+    }
+
+    return 'bukti_'.$bukti;
+  }
+
   public function login(){
     if($this->session->userdata('login'))
       redirect(site_url('dashboard'));
@@ -105,10 +115,17 @@ class User extends CI_Controller {
   public function pay(){
     if($this->user_model->checkConfirm($this->session->userdata('id'))->num_rows() > 0)
       redirect(site_url('dashboard'));
-    
+
     if($this->input->post('upload')){
+      $bukti = $this->generateBukti();
+
+      // jika alamat bukti udah ada di db
+      while($this->user_model->checkBukti($bukti)->num_rows() > 0){
+        $bukti = $this->generateBukti();
+      }
+
       $config['upload_path']   = './foto/bukti/';
-      $config['file_name']     = 'bukti_'. $this->session->userdata('username');
+      $config['file_name']     = $bukti;
       $config['allowed_types'] = 'jpg|png';
       $config['max_size']      = 300;
 
@@ -116,9 +133,8 @@ class User extends CI_Controller {
 
       if ( ! $this->upload->do_upload('bukti'))
       {
-        // Tampil error, but wait aku masih bingung disini wkwk
-        $error = array('error' => $this->upload->display_errors());
-        $this->load->view('user/error_upload', $error);
+        $this->session->set_flashdata('msg', $this->upload->display_errors());
+        $this->session->set_flashdata('type', 'danger');
       }
       else
       {
@@ -128,12 +144,17 @@ class User extends CI_Controller {
           redirect(site_url('dashboard'));
         }
         else {
-          echo "error";
+          $this->session->set_flashdata('msg', 'Terjadi kesalahan, gagal mengupload bukti');
+          $this->session->set_flashdata('type', 'danger');
         }
       }
 
+      redirect(site_url('dashboard'));
+
     }
     else {
+      $data['message'] = $this->session->flashdata('msg');
+      $data['type'] = $this->session->flashdata('type');
       $data['status'] = $this->user_model->getUserById($this->session->userdata('id'));
       $this->load->view('user/pay_first', $data);
     }

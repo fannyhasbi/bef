@@ -43,6 +43,10 @@ class User_model extends CI_Model {
     return $this->db->get_where('konfirmasi', $data);
   }
 
+  public function checkBukti($bukti){
+    return $this->db->get_where('pendaftar', ['bukti' => $bukti]);
+  }
+
   public function addFirst(){
     $data = array(
       'username' => $this->purify($this->input->post('username')),
