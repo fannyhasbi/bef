@@ -33,6 +33,16 @@ class User extends CI_Controller {
     return 'bukti_'.$bukti;
   }
 
+  private function generateAlamatFoto(){
+    $foto = "";
+    $n = "1234567890";
+    for($i=0;$i<5;$i++){
+      $foto .= $n[rand(0, strlen($n) - 1)];
+    }
+
+    return 'foto_'.$foto;
+  }
+
   public function login(){
     if($this->session->userdata('login'))
       redirect(site_url('dashboard'));
@@ -162,9 +172,66 @@ class User extends CI_Controller {
   }
 
   public function profil(){
-    $data['profil'] = $this->user_model->getPesertaById($this->session->userdata('id'));
-    $data['view_name'] = 'profil';
-    $this->load->view('user/index_view', $data);
+    if($this->input->post('simpan')){
+      $nis  = $this->input->post('nis');
+      $sek  = $this->input->post('sekolah');
+
+      // ga dipake dulu, bingung
+      $univ1= $this->input->post('univ1');
+      $univ2= $this->input->post('univ2');
+
+      // cuma memastikan kalo user usil pake js injection :(
+      if($nis!=null && $sek!=null){
+        $alamat_foto = $this->generateAlamatFoto();
+
+        // jika alamat bukti udah ada di db
+        while($this->user_model->checkFoto($alamat_foto)->num_rows() > 0){
+          $alamat_foto = $this->generateAlamatFoto();
+        }
+
+        $config['upload_path']   = './foto/peserta/';
+        $config['file_name']     = $alamat_foto;
+        $config['allowed_types'] = 'jpg|png';
+        $config['max_size']      = 300;
+
+        $this->load->library('upload', $config);
+
+        if ( ! $this->upload->do_upload('foto'))
+        {
+          $this->session->set_flashdata('msg', $this->upload->display_errors());
+          $this->session->set_flashdata('type', 'danger');
+        }
+        else
+        {
+          $data_upload = $this->upload->data();
+
+          if($this->user_model->updatePeserta($data_upload['file_name'])){
+            $this->session->set_flashdata('msg', 'Berhasil menyimpan, silahkan lanjutkan mencetak.');
+            $this->session->set_flashdata('type', 'success');
+          }
+          else {
+            // jika gagal INSERT
+            $this->session->set_flashdata('msg', 'Terjadi kesalahan saat menyimpan, silahkan coba beberapa saat lagi.');
+            $this->session->set_flashdata('type', 'danger');
+          }
+        }
+
+      }
+      else {
+        $this->session->set_flashdata('msg', 'Semua form harus diisi');
+        $this->session->set_flashdata('type', 'danger');
+      }
+
+      redirect(site_url('dashboard'));
+    }
+    else {
+      $data['message'] = $this->session->flashdata('msg');
+      $data['type'] = $this->session->flashdata('type');
+
+      $data['profil'] = $this->user_model->getPesertaById($this->session->userdata('id'));
+      $data['view_name'] = 'profil';
+      $this->load->view('user/index_view', $data);
+    }
   }
 
   public function ganti_pass(){

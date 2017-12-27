@@ -9,7 +9,7 @@
         <div class="card-content">
           
           <!-- Form ubah profil -->
-          <form action="" method="post" enctype="multipart/form-data">
+          <form action="<?= site_url('profil'); ?>" method="post" enctype="multipart/form-data">
             
             <div class="row">
               <div class="col-md-6">
