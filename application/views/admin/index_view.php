@@ -1,3 +1,7 @@
+<?php
+$load = $this->db->query("SELECT COUNT(id) AS total FROM pendaftar WHERE bukti IS NOT NULL AND id NOT IN (SELECT id_pendaftar FROM konfirmasi);");
+$label = $load->row()->total;
+?>
 <!doctype html>
 <html lang="en">
 <head>
@@ -57,13 +61,13 @@
         <li <?= uri_string() == 'me/konfirmasi' ? 'class="active"' : ''; ?>>
           <a href="<?= site_url('me/konfirmasi'); ?>">
             <i class="material-icons">check_circle</i>
-            <p>Konfirmasi</p>
+            <p>Konfirmasi &nbsp; <span class="label <?= $label==0 ? 'label-success' : 'label-danger' ?>"><?= $label; ?></span></p>
           </a>
         </li>
         <li <?= uri_string() == 'me/ganti_password' ? 'class="active"' : ''; ?>>
           <a href="<?= site_url('me/ganti_password'); ?>">
             <i class="material-icons">vpn_key</i>
-            <p>Ganti Password</p>
+            <p>Ubah Password</p>
           </a>
         </li>
         <li>

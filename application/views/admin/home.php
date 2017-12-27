@@ -41,7 +41,7 @@
           <div class="ct-chart" id="dailySalesChart"></div>
         </div>
         <div class="card-content">
-          <h4 class="title">Grafik <span class="text-success">Pendaftar</span> & <span class="text-danger">Peserta</span></h4>
+          <h4 class="title">Grafik <span class="text-danger">Pendaftar</span> & <span class="text-success">Peserta</span></h4>
           <p class="category">
             Data pendaftaran peserta tiap hari.
           </p>

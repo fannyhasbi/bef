@@ -51,7 +51,7 @@
         <li <?= uri_string() == 'ganti_password' ? 'class="active"' : ''; ?>>
           <a href="<?= site_url('ganti_password'); ?>">
             <i class="material-icons">vpn_key</i>
-            <p>Ganti Password</p>
+            <p>Ubah Password</p>
           </a>
         </li>
         <li <?= uri_string() == 'cetak' ? 'class="active"' : ''; ?>>
