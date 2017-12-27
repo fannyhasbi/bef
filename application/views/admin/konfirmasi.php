@@ -29,10 +29,10 @@
                     <td><?= $item->username; ?></td>
                     <td><?= $item->nama; ?></td>
                     <td class="text-center">
-                      <a href="<?= base_url('foto/bukti/'. $item->bukti); ?>" rel="tooltip" title="Lihat" class="btn btn-info btn-simple btn-xs" target="_blank">
+                      <a href="<?= base_url('foto/bukti/'. $item->bukti); ?>" rel="tooltip" title="Lihat bukti" class="btn btn-info btn-simple btn-xs" target="_blank">
                         <i class="material-icons">search</i> Lihat
                       </a>
-                      <a href="<?= base_url('me/confirm/'. $item->id); ?>" rel="tooltip" title="Lihat" class="btn btn-success btn-simple btn-xs">
+                      <a href="<?= base_url('me/confirm/'. $item->id); ?>" rel="tooltip" title="Konfirmasi" class="btn btn-success btn-simple btn-xs">
                         <i class="material-icons">check_circle</i> Konfirmasi
                       </a>
                     </td>

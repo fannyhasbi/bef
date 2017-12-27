@@ -112,7 +112,7 @@ $(document).ready(function(){
       message: msg
     }, {
       type: type,
-      timer: 20000,
+      timer: 3000,
       placement: {
         from: 'top',
         align: 'center'
