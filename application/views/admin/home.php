@@ -7,7 +7,7 @@
         </div>
         <div class="card-content">
           <p class="category">Pendaftar</p>
-          <h3 class="title">230 <small>siswa</small></h3>
+          <h3 class="title"><?= $count->pendaftar; ?> <small>siswa</small></h3>
         </div>
         <div class="card-footer">
           <div class="stats">
@@ -23,7 +23,7 @@
         </div>
         <div class="card-content">
           <p class="category">Peserta</p>
-          <h3 class="title">200 <small>peserta</small></h3>
+          <h3 class="title"><?= $count->peserta; ?> <small>peserta</small></h3>
         </div>
         <div class="card-footer">
           <div class="stats">

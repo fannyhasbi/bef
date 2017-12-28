@@ -74,6 +74,22 @@ class Admin_model extends CI_Model {
       return false;
   }
 
+  public function deleteConfirm($id_pendaftar){
+    $this->db->where('id_pendaftar', $id_pendaftar);
+    if($this->db->delete('konfirmasi'))
+      return true;
+    else 
+      return false;
+  }
+
+  public function deletePeserta($id_pendaftar){
+    $this->db->where('id_pendaftar', $id_pendaftar);
+    if($this->db->delete('peserta'))
+      return true;
+    else 
+      return false;
+  }
+
   public function getAdmin(){
     $data = array(
       'username' => $this->purify($this->input->post('username'))
@@ -83,12 +99,37 @@ class Admin_model extends CI_Model {
   }
   
   public function getBukti(){
-    $q = $this->db->query("SELECT * FROM pendaftar WHERE bukti IS NOT NULL AND id NOT IN (SELECT id_pendaftar FROM konfirmasi);");
+    // SELECT id AS refId, username, nama, bukti, IF((SELECT COUNT(id) FROM konfirmasi WHERE id_pendaftar = refId) > 0, 1, 0) AS konfirmasi FROM pendaftar
+    $q = $this->db->get("v_konfirmasi");
     return $q->result();
   }
 
   public function getLastPeserta(){
-    $q = $this->db->query("SELECT no_peserta FROM peserta ORDER BY no_peserta DESC LIMIT 0, 1");
+    $q = $this->db->query("SELECT MAX(no_peserta) AS max FROM peserta ORDER BY no_peserta");
     return $q->row();
   }
+
+  public function getCount(){
+    $q = $this->db->query('SELECT (SELECT COUNT(id) FROM pendaftar) AS pendaftar, (SELECT COUNT(no_peserta) FROM peserta) AS peserta');
+    return $q->row();
+  }
+
+  public function getGrafikPeserta(){
+    $q = $this->db->query("SELECT DATE_FORMAT(c.datefield, '%e %b') AS tanggal, COUNT(p.no_peserta) AS jumlah FROM peserta p INNER JOIN konfirmasi k ON p.id_pendaftar = k.id_pendaftar RIGHT JOIN calendar c ON DATE(k.tgl) = c.datefield WHERE c.datefield BETWEEN (SELECT MIN(c.datefield)) AND NOW() GROUP BY tanggal");
+    return $q->result();
+  }
+
+  public function getGrafikPendaftar(){
+    $q = $this->db->query("SELECT DATE_FORMAT(c.datefield, '%e %b') AS tanggal, COUNT(d.id) AS jumlah FROM pendaftar d RIGHT JOIN calendar c ON DATE(d.tgl) = c.datefield WHERE c.datefield BETWEEN (SELECT MIN(c.datefield)) AND NOW() GROUP BY tanggal");
+    return $q->result();
+  }
+
+  public function getGrafikTertinggi(){
+    $pendaftar = $this->db->query("SELECT MAX(counted) AS jumlah FROM (SELECT COUNT(id) AS counted FROM pendaftar GROUP BY tgl) AS m_pendaftar");
+    $peserta   = $this->db->query("SELECT MAX(counted) AS jumlah FROM (SELECT COUNT(no_peserta) AS counted FROM peserta p INNER JOIN konfirmasi k ON p.id_pendaftar = k.id_pendaftar GROUP BY DATE(k.tgl)) AS m_peserta");
+
+    return $pendaftar->row()->jumlah > $peserta->row()->jumlah ? $pendaftar->row()->jumlah : $peserta->row()->jumlah;
+  }
+
+
 }
