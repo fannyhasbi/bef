@@ -74,6 +74,22 @@ class Admin_model extends CI_Model {
       return false;
   }
 
+  public function deleteConfirm($id_pendaftar){
+    $this->db->where('id_pendaftar', $id_pendaftar);
+    if($this->db->delete('konfirmasi'))
+      return true;
+    else 
+      return false;
+  }
+
+  public function deletePeserta($id_pendaftar){
+    $this->db->where('id_pendaftar', $id_pendaftar);
+    if($this->db->delete('peserta'))
+      return true;
+    else 
+      return false;
+  }
+
   public function getAdmin(){
     $data = array(
       'username' => $this->purify($this->input->post('username'))
@@ -83,12 +99,13 @@ class Admin_model extends CI_Model {
   }
   
   public function getBukti(){
-    $q = $this->db->query("SELECT * FROM pendaftar WHERE bukti IS NOT NULL AND id NOT IN (SELECT id_pendaftar FROM konfirmasi);");
+    // SELECT id AS refId, username, nama, bukti, IF((SELECT COUNT(id) FROM konfirmasi WHERE id_pendaftar = refId) > 0, 1, 0) AS konfirmasi FROM pendaftar
+    $q = $this->db->get("v_konfirmasi");
     return $q->result();
   }
 
   public function getLastPeserta(){
-    $q = $this->db->query("SELECT no_peserta FROM peserta ORDER BY no_peserta DESC LIMIT 0, 1");
+    $q = $this->db->query("SELECT MAX(no_peserta) AS max FROM peserta ORDER BY no_peserta");
     return $q->row();
   }
 }

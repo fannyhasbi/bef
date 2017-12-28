@@ -61,7 +61,7 @@ class Admin extends CI_Controller {
     if($this->admin_model->checkIdPendaftar($id_pendaftar)->num_rows() > 0){
       if($this->admin_model->addConfirm($id_pendaftar)){
         $last_peserta = $this->admin_model->getLastPeserta();
-        $no_peserta = $last_peserta->no_peserta + 1;
+        $no_peserta = $last_peserta->max + 1;
 
         if($this->admin_model->addPeserta($id_pendaftar, $no_peserta)){
           $this->session->set_flashdata('msg', 'Berhasil mengkonfirmasi.');
@@ -78,7 +78,26 @@ class Admin extends CI_Controller {
       }
     }
 
-    redirect(site_url('me'));
+    redirect(site_url('me/konfirmasi'));
+  }
+
+  public function cancel($id_pendaftar){
+    $this->cekLogin();
+
+    if($this->admin_model->checkIdPendaftar($id_pendaftar)->num_rows() > 0){
+      if($this->admin_model->deleteConfirm($id_pendaftar)){
+        // I dunno what is this, I don't use if else again wkwkwk :v
+        $this->admin_model->deletePeserta($id_pendaftar);
+        $this->session->set_flashdata('msg', 'Konfirmasi berhasil dibatalkan.');
+        $this->session->set_flashdata('type', 'success');
+      }
+      else {
+        $this->session->set_flashdata('msg', 'Terjadi kesalahan, gagal mengkonfirmasi.');
+        $this->session->set_flashdata('type', 'danger');
+      }
+    }
+
+    redirect(site_url('me/konfirmasi'));
   }
 
   public function konfirmasi(){

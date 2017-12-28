@@ -29,12 +29,27 @@
                     <td><?= $item->username; ?></td>
                     <td><?= $item->nama; ?></td>
                     <td class="text-center">
-                      <a href="<?= base_url('foto/bukti/'. $item->bukti); ?>" rel="tooltip" title="Lihat bukti" class="btn btn-info btn-simple btn-xs" target="_blank">
-                        <i class="material-icons">search</i> Lihat
-                      </a>
-                      <a href="<?= base_url('me/confirm/'. $item->id); ?>" rel="tooltip" title="Konfirmasi" class="btn btn-success btn-simple btn-xs">
-                        <i class="material-icons">check_circle</i> Konfirmasi
-                      </a>
+                      <?php if($item->konfirmasi == 1){ ?>
+                        <?php if($item->bukti != null){ ?>
+                          <a href="<?= base_url('foto/bukti/'. $item->bukti); ?>" rel="tooltip" title="Lihat bukti" class="btn btn-info btn-simple btn-xs" target="_blank">
+                            <i class="material-icons">search</i> Lihat
+                          </a>
+                        <?php } ?>
+
+                        <a href="<?= base_url('me/cancel/'. $item->refId); ?>" rel="tooltip" title="Batalkan konfirmasi" class="btn btn-danger btn-simple btn-xs">
+                          <i class="material-icons">highlight_off</i> Batalkan
+                        </a>
+                      <?php } else { ?>
+                        <?php if($item->bukti != null){ ?>
+                          <a href="<?= base_url('foto/bukti/'. $item->bukti); ?>" rel="tooltip" title="Lihat bukti" class="btn btn-info btn-simple btn-xs" target="_blank">
+                            <i class="material-icons">search</i> Lihat
+                          </a>
+                        <?php } ?>
+
+                        <a href="<?= base_url('me/confirm/'. $item->refId); ?>" rel="tooltip" title="Konfirmasi" class="btn btn-success btn-simple btn-xs">
+                          <i class="material-icons">check_circle</i> Konfirmasi
+                        </a>
+                      <?php } ?>
                     </td>
                   </tr>
                 <?php
