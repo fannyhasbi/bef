@@ -8,7 +8,8 @@ class Admin extends CI_Controller {
   }
 
   public function index(){
-    $this->cekLogin();
+    if(!$this->session->userdata('login_admin'))
+      redirect(site_url('me/login'));
 
     $data['message'] = $this->session->flashdata('msg');
     $data['type'] = $this->session->flashdata('type');
