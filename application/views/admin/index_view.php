@@ -138,7 +138,8 @@ dataDailySalesChart = {
     <?php
       $d_tgl = array();
       foreach($grafik['pendaftar'] as $tgl){
-        $d_tgl[] = '"'.$tgl->tanggal.'"';
+        $t = explode('-', $tgl->tanggal);
+        $d_tgl[] = '"'.$t['0'].'"';
       }
       echo implode(",", $d_tgl);
     ?>

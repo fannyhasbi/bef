@@ -120,7 +120,7 @@ class Admin_model extends CI_Model {
   }
 
   public function getGrafikPendaftar(){
-    $q = $this->db->query("SELECT DATE_FORMAT(c.datefield, '%e %b') AS tanggal, COUNT(d.id) AS jumlah FROM pendaftar d RIGHT JOIN calendar c ON DATE(d.tgl) = c.datefield WHERE c.datefield BETWEEN (SELECT MIN(c.datefield)) AND NOW() GROUP BY tanggal");
+    $q = $this->db->query("SELECT DATE_FORMAT(c.datefield, '%e-%m') AS tanggal, COUNT(d.id) AS jumlah FROM pendaftar d RIGHT JOIN calendar c ON DATE(d.tgl) = c.datefield WHERE c.datefield BETWEEN (SELECT MIN(c.datefield)) AND NOW() GROUP BY tanggal");
     return $q->result();
   }
 
