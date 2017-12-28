@@ -113,4 +113,14 @@ class Admin_model extends CI_Model {
     $q = $this->db->query('SELECT (SELECT COUNT(id) FROM pendaftar) AS pendaftar, (SELECT COUNT(no_peserta) FROM peserta) AS peserta');
     return $q->row();
   }
+
+  public function getGrafikPeserta(){
+    $q = $this->db->query("SELECT DATE_FORMAT(c.datefield, '%e %b') AS tanggal, COUNT(p.no_peserta) AS jumlah FROM peserta p INNER JOIN konfirmasi k ON p.id_pendaftar = k.id_pendaftar RIGHT JOIN calendar c ON DATE(k.tgl) = c.datefield WHERE c.datefield BETWEEN (SELECT MIN(c.datefield)) AND NOW() GROUP BY tanggal");
+    return $q->result();
+  }
+
+  public function getGrafikPendaftar(){
+    $q = $this->db->query("SELECT DATE_FORMAT(c.datefield, '%e %b') AS tanggal, COUNT(d.id) AS jumlah FROM pendaftar d RIGHT JOIN calendar c ON DATE(d.tgl) = c.datefield WHERE c.datefield BETWEEN (SELECT MIN(c.datefield)) AND NOW() GROUP BY tanggal");
+    return $q->result();
+  }
 }

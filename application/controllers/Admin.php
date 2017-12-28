@@ -14,8 +14,12 @@ class Admin extends CI_Controller {
     $data['type'] = $this->session->flashdata('type');
 
     $data['grafik'] = array(
-      'peserta' => $this->admin_model->getDataPeserta()
+      'peserta' => $this->admin_model->getGrafikPeserta(),
+      'pendaftar' => $this->admin_model->getGrafikPendaftar()
     );
+
+    // tanggal tertinggi
+    // $data['grafik']['highest'] = $data['grafik']['peserta']->
 
     $data['count'] = $this->admin_model->getCount();
     $data['view_name'] = 'home';

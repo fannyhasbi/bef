@@ -134,10 +134,34 @@ $(document).ready(function(){
 <?php if(uri_string() == 'me'){ ?>
 
 dataDailySalesChart = {
-  labels: ['M', 'T', 'W', 'T', 'F', 'S', 'S'],
+  labels: [
+    <?php
+      $d_tgl = array();
+      foreach($grafik['pendaftar'] as $tgl){
+        $d_tgl[] = '"'.$tgl->tanggal.'"';
+      }
+      echo implode(",", $d_tgl);
+    ?>
+  ],
   series: [
-    [12, 17, 7, 17, 23, 18, 38],
-    [20, 13, 2, 5, 14, 20, 12]
+    [
+      <?php
+        $d_peserta = array();
+        foreach($grafik['peserta'] as $peserta){
+          $d_peserta[] = $peserta->jumlah;
+        }
+        echo implode(",", $d_peserta);
+      ?>
+    ],
+    [
+      <?php
+        $d_pendaftar = array();
+        foreach($grafik['pendaftar'] as $pendaftar){
+          $d_pendaftar[] = $pendaftar->jumlah;
+        }
+        echo implode(",", $d_pendaftar);
+      ?>
+    ]
   ]
 };
 
@@ -146,7 +170,7 @@ optionsDailySalesChart = {
     tension: 0
   }),
   low: 0,
-  high: 50,
+  high: 10,
   chartPadding: {
     top: 0,
     right: 0,
