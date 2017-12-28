@@ -108,4 +108,9 @@ class Admin_model extends CI_Model {
     $q = $this->db->query("SELECT MAX(no_peserta) AS max FROM peserta ORDER BY no_peserta");
     return $q->row();
   }
+
+  public function getCount(){
+    $q = $this->db->query('SELECT (SELECT COUNT(id) FROM pendaftar) AS pendaftar, (SELECT COUNT(no_peserta) FROM peserta) AS peserta');
+    return $q->row();
+  }
 }

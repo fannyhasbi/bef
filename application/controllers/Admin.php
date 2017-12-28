@@ -13,6 +13,11 @@ class Admin extends CI_Controller {
     $data['message'] = $this->session->flashdata('msg');
     $data['type'] = $this->session->flashdata('type');
 
+    $data['grafik'] = array(
+      'peserta' => $this->admin_model->getDataPeserta()
+    );
+
+    $data['count'] = $this->admin_model->getCount();
     $data['view_name'] = 'home';
     $this->load->view('admin/index_view', $data);
   }
