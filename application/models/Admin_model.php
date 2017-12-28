@@ -123,4 +123,13 @@ class Admin_model extends CI_Model {
     $q = $this->db->query("SELECT DATE_FORMAT(c.datefield, '%e %b') AS tanggal, COUNT(d.id) AS jumlah FROM pendaftar d RIGHT JOIN calendar c ON DATE(d.tgl) = c.datefield WHERE c.datefield BETWEEN (SELECT MIN(c.datefield)) AND NOW() GROUP BY tanggal");
     return $q->result();
   }
+
+  public function getGrafikTertinggi(){
+    $pendaftar = $this->db->query("SELECT MAX(counted) AS jumlah FROM (SELECT COUNT(id) AS counted FROM pendaftar GROUP BY tgl) AS m_pendaftar");
+    $peserta   = $this->db->query("SELECT MAX(counted) AS jumlah FROM (SELECT COUNT(no_peserta) AS counted FROM peserta p INNER JOIN konfirmasi k ON p.id_pendaftar = k.id_pendaftar GROUP BY DATE(k.tgl)) AS m_peserta");
+
+    return $pendaftar->row()->jumlah > $peserta->row()->jumlah ? $pendaftar->row()->jumlah : $peserta->row()->jumlah;
+  }
+
+
 }

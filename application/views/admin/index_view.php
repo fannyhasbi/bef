@@ -170,7 +170,7 @@ optionsDailySalesChart = {
     tension: 0
   }),
   low: 0,
-  high: 10,
+  high: <?= $grafik['highest'] + 10; ?>,
   chartPadding: {
     top: 0,
     right: 0,

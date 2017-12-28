@@ -15,11 +15,9 @@ class Admin extends CI_Controller {
 
     $data['grafik'] = array(
       'peserta' => $this->admin_model->getGrafikPeserta(),
-      'pendaftar' => $this->admin_model->getGrafikPendaftar()
+      'pendaftar' => $this->admin_model->getGrafikPendaftar(),
+      'highest' => $this->admin_model->getGrafikTertinggi() // mendapatkan nilai tertinggi dari pendaftar ataupun peserta
     );
-
-    // tanggal tertinggi
-    // $data['grafik']['highest'] = $data['grafik']['peserta']->
 
     $data['count'] = $this->admin_model->getCount();
     $data['view_name'] = 'home';
