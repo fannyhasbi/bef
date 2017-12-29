@@ -61,6 +61,31 @@ class Sudo_model extends CI_Model {
       return false;
   }
 
+  public function addPTN(){
+    $data = array(
+      'kode' => $this->purify($this->input->post('kode')),
+      'nama' => $this->purify($this->input->post('nama'))
+    );
+
+    if($this->db->insert('ptn', $data))
+      return true;
+    else
+      return false;
+  }
+
+  public function addProdi(){
+    $data = array(
+      'kode' => $this->purify($this->input->post('kode')),
+      'nama' => $this->purify($this->input->post('nama')),
+      'ptn' => $this->input->post('ptn')
+    );
+
+    if($this->db->insert('prodi', $data))
+      return true;
+    else
+      return false;
+  }
+
   public function updatePass($new){
     $new = password_hash($new, PASSWORD_BCRYPT);
     $this->db->where('id', $this->session->userdata('id_sudo'));
@@ -121,6 +146,16 @@ class Sudo_model extends CI_Model {
 
   public function getAdmin(){
     $q = $this->db->query("SELECT * FROM admin");
+    return $q->result();
+  }
+
+  public function getPTN(){
+    $q = $this->db->get('ptn');
+    return $q->result();
+  }
+
+  public function getProdi(){
+    $q = $this->db->query("SELECT p.kode, p.nama, n.nama AS nama_ptn FROM prodi p INNER JOIN ptn n ON p.ptn = n.kode");
     return $q->result();
   }
 }

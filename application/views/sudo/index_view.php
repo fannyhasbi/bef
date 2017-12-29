@@ -77,6 +77,18 @@ $label = $load->row()->total;
             <p>Admin</p>
           </a>
         </li>
+        <li <?= uri_string()=='sudo/ptn'||uri_string()=='sudo/add-ptn' ? 'class="active"' : ''; ?>>
+          <a href="<?= site_url('sudo/ptn'); ?>">
+            <i class="material-icons">gavel</i>
+            <p>PTN</p>
+          </a>
+        </li>
+        <li <?= uri_string()=='sudo/prodi'||uri_string()=='sudo/add-prodi' ? 'class="active"' : ''; ?>>
+          <a href="<?= site_url('sudo/prodi'); ?>">
+            <i class="material-icons">label</i>
+            <p>Prodi</p>
+          </a>
+        </li>
         <li>
           <a href="<?= site_url('keluar'); ?>">
             <i class="material-icons">exit_to_app</i>

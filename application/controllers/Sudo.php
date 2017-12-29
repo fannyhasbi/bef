@@ -214,4 +214,74 @@ class Sudo extends CI_Controller {
     redirect(site_url('sudo/konfirmasi'));
   }
 
+  public function ptn(){
+    $this->cekLogin();
+
+    $data['ptn'] = $this->sudo_model->getPTN();
+
+    $data['message'] = $this->session->flashdata('msg');
+    $data['type'] = $this->session->flashdata('type');
+    $data['view_name'] = 'ptn';
+    $this->load->view('sudo/index_view', $data);
+  }
+
+  public function add_ptn(){
+    $this->cekLogin();
+
+    if($this->input->post('tambah')){
+      if($this->sudo_model->addPTN()){
+        $this->session->set_flashdata('msg', 'Berhasil menambahkan PTN.');
+        $this->session->set_flashdata('type', 'success');
+      }
+      else {
+        $this->session->set_flashdata('msg', 'Terjadi kesalahan, gagal menambahkan PTN.');
+        $this->session->set_flashdata('type', 'danger');
+      }
+
+      redirect(site_url('sudo/ptn'));
+    }
+    else {
+      $data['message'] = $this->session->flashdata('msg');
+      $data['type'] = $this->session->flashdata('type');
+      $data['view_name'] = 'add_ptn';
+      $this->load->view('sudo/index_view', $data);
+    }
+  }
+
+  public function prodi(){
+    $this->cekLogin();
+
+    $data['prodi'] = $this->sudo_model->getProdi();
+
+    $data['message'] = $this->session->flashdata('msg');
+    $data['type'] = $this->session->flashdata('type');
+    $data['view_name'] = 'prodi';
+    $this->load->view('sudo/index_view', $data);
+  }
+
+  public function add_prodi(){
+    $this->cekLogin();
+
+    if($this->input->post('tambah')){
+      if($this->sudo_model->addProdi()){
+        $this->session->set_flashdata('msg', 'Berhasil menambahkan prodi.');
+        $this->session->set_flashdata('type', 'success');
+      }
+      else {
+        $this->session->set_flashdata('msg', 'Terjadi kesalahan, gagal menambahkan prodi.');
+        $this->session->set_flashdata('type', 'danger');
+      }
+
+      redirect(site_url('sudo/prodi'));
+    }
+    else {
+      $data['ptn'] = $this->sudo_model->getPTN();
+
+      $data['message'] = $this->session->flashdata('msg');
+      $data['type'] = $this->session->flashdata('type');
+      $data['view_name'] = 'add_prodi';
+      $this->load->view('sudo/index_view', $data);
+    }
+  }
+
 }
