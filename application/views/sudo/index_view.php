@@ -52,22 +52,28 @@ $label = $load->row()->total;
     </div>
     <div class="sidebar-wrapper">
       <ul class="nav">
-        <li <?= uri_string() == 'me' ? 'class="active"' : ''; ?>>
-          <a href="<?= site_url('me'); ?>">
+        <li <?= uri_string() == 'sudo' ? 'class="active"' : ''; ?>>
+          <a href="<?= site_url('sudo'); ?>">
             <i class="material-icons">dashboard</i>
             <p>Dashboard</p>
           </a>
         </li>
-        <li <?= uri_string() == 'me/konfirmasi' ? 'class="active"' : ''; ?>>
-          <a href="<?= site_url('me/konfirmasi'); ?>">
+        <li <?= uri_string() == 'sudo/konfirmasi' ? 'class="active"' : ''; ?>>
+          <a href="<?= site_url('sudo/konfirmasi'); ?>">
             <i class="material-icons">check_circle</i>
             <p>Konfirmasi &nbsp; <span class="label <?= $label==0 ? 'label-success' : 'label-danger' ?>"><?= $label; ?></span></p>
           </a>
         </li>
-        <li <?= uri_string() == 'me/ganti_password' ? 'class="active"' : ''; ?>>
-          <a href="<?= site_url('me/ganti_password'); ?>">
+        <li <?= uri_string() == 'sudo/ganti_password' ? 'class="active"' : ''; ?>>
+          <a href="<?= site_url('sudo/ganti_password'); ?>">
             <i class="material-icons">vpn_key</i>
             <p>Ubah Password</p>
+          </a>
+        </li>
+        <li <?= uri_string() == 'sudo/admin' ? 'class="active"' : ''; ?>>
+          <a href="<?= site_url('sudo/admin'); ?>">
+            <i class="material-icons">account_circle</i>
+            <p>Admin</p>
           </a>
         </li>
         <li>
@@ -89,13 +95,13 @@ $label = $load->row()->total;
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="#"> Admin </a>
+          <a class="navbar-brand" href="#"> Super Admin </a>
         </div>
       </div>
     </nav>
 
     <div class="content">
-      <?php $this->load->view('admin/'.$view_name); ?>
+      <?php $this->load->view('sudo/'.$view_name); ?>
     </div>
 
     <footer class="footer">
@@ -122,7 +128,7 @@ $(document).ready(function(){
       message: msg
     }, {
       type: type,
-      timer: 20000,
+      timer: 3000,
       placement: {
         from: 'top',
         align: 'center'
@@ -131,7 +137,7 @@ $(document).ready(function(){
   }
 });
 
-<?php if(uri_string() == 'me'){ ?>
+<?php if(uri_string() == 'sudo'){ ?>
 
 dataDailySalesChart = {
   labels: [
