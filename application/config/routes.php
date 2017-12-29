@@ -29,8 +29,14 @@ $route['sudo/konfirmasi'] = 'sudo/konfirmasi';
 $route['sudo/add-admin'] = 'sudo/add_admin';
 $route['sudo/del-admin/(:num)'] = 'sudo/del_admin/$1';
 $route['sudo/del-peserta/(:num)'] = 'sudo/del_peserta/$1';
+
+// PTN
 $route['sudo/ptn'] = 'sudo/ptn';
 $route['sudo/add-ptn'] = 'sudo/add_ptn';
+$route['sudo/edit-ptn/(:any)'] = 'sudo/edit_ptn/$1';
+$route['sudo/del-ptn/(:any)'] = 'sudo/del_ptn/$1';
+
+// Prodi
 $route['sudo/prodi'] = 'sudo/prodi';
 $route['sudo/add-prodi'] = 'sudo/add_prodi';
 

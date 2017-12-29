@@ -21,6 +21,10 @@ class Sudo_model extends CI_Model {
     return $this->db->get_where('pendaftar', ['id' => $id]);
   }
 
+  public function checkPTN($kode){
+    return $this->db->get_where('ptn', ['kode' => $kode]);
+  }
+
   public function addConfirm($id_pendaftar){
     $data = array(
       'id_admin' => $this->session->userdata('id_sudo'),
@@ -95,6 +99,11 @@ class Sudo_model extends CI_Model {
       return false;
   }
 
+  public function updatePTN($kode){
+    $this->db->where('kode', $kode);
+    $this->db->update('ptn', ['nama' => $this->purify($this->input->post('nama'))]);
+  }
+
   public function deleteConfirm($id_pendaftar){
     $this->db->where('id_pendaftar', $id_pendaftar);
     if($this->db->delete('konfirmasi'))
@@ -120,6 +129,19 @@ class Sudo_model extends CI_Model {
   public function deleteAdmin($id_admin){
     $this->db->where('id', $id_admin);
     if($this->db->delete('admin'))
+      return true;
+    else
+      return false;
+  }
+
+  public function deletePTN($kode){
+    $this->db->where('kode', $kode);
+    $this->db->delete('ptn');
+  }
+
+  public function deleteAllProdi($kode_ptn){
+    $this->db->where('ptn', $kode_ptn);
+    if($this->db->delete('prodi'))
       return true;
     else
       return false;
@@ -152,6 +174,11 @@ class Sudo_model extends CI_Model {
   public function getPTN(){
     $q = $this->db->get('ptn');
     return $q->result();
+  }
+
+  public function getPTNByKode($kode){
+    $q = $this->db->get_where('ptn', ['kode' => $kode]);
+    return $q->row();
   }
 
   public function getProdi(){

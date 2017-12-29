@@ -248,6 +248,45 @@ class Sudo extends CI_Controller {
     }
   }
 
+  public function edit_ptn($kode){
+    $this->cekLogin();
+
+    if($this->input->post('edit')){
+      $this->sudo_model->updatePTN($kode);
+
+      $this->session->set_flashdata('msg', 'Berhasil memperbarui PTN.');
+      $this->session->set_flashdata('type', 'success');
+
+      redirect(site_url('sudo/ptn'));
+    }
+    else {
+      $data['ptn'] = $this->sudo_model->getPTNByKode($kode);
+
+      $data['message'] = $this->session->flashdata('msg');
+      $data['type'] = $this->session->flashdata('type');
+      $data['view_name'] = 'edit_ptn';
+      $this->load->view('sudo/index_view', $data);
+    }
+  }
+
+  public function del_ptn($kode){
+    $this->cekLogin();
+
+    if($this->sudo_model->checkPTN($kode)->num_rows() > 0){
+      if($this->sudo_model->deleteAllProdi($kode)){
+        $this->sudo_model->deletePTN($kode);
+        $this->session->set_flashdata('msg', 'Berhasil menghapus PTN.');
+        $this->session->set_flashdata('type', 'success');
+      }
+      else {
+        $this->session->set_flashdata('msg', 'Terjadi kesalahan, gagal menghapus PTN.');
+        $this->session->set_flashdata('type', 'success');
+      }
+    }
+
+    redirect(site_url('sudo/ptn'));
+  }
+
   public function prodi(){
     $this->cekLogin();
 

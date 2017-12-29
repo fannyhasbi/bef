@@ -20,6 +20,7 @@
                 <tr>
                   <th>Kode</th>
                   <th>Nama</th>
+                  <th>Action</th>
                 </tr>
               </thead>
               <tbody>
@@ -29,6 +30,14 @@
                   <tr>
                     <td><?= $item->kode; ?></td>
                     <td><?= $item->nama; ?></td>
+                    <td>
+                      <a href="<?= base_url('sudo/edit-ptn/'. $item->kode); ?>" rel="tooltip" title="Edit PTN" class="btn btn-info btn-simple btn-xs">
+                        <i class="material-icons">description</i> Edit
+                      </a>
+                      <button class="btn btn-danger btn-simple btn-xs" title="Hapus PTN" rel="tooltip" onclick="hapus(<?= $item->kode; ?>)">
+                        <i class="material-icons">close</i> Hapus
+                      </button>
+                    </td>
                   </tr>
 
                 <?php endforeach; ?>
@@ -54,9 +63,9 @@
   });
 
   function hapus(id){
-    var j = confirm("Yakin ingin menghapus?");
+    var j = confirm("Yakin ingin menghapus? Semua prodi pada PTN ini akan terhapus");
     if(j){
-      window.location = "<?= site_url('sudo/del-peserta/'); ?>"+ id;
+      window.location = "<?= site_url('sudo/del-ptn/'); ?>"+ id;
     }
   }
 </script>
