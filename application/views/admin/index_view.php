@@ -39,9 +39,9 @@ $label = $load->row()->total;
   <script src="<?= base_url(); ?>/assets/js/register.js"></script>
 
   <!-- DataTable -->
-  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.16/datatables.min.css"/>
-  <script type="text/javascript" src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
-  <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.16/datatables.min.js"></script>
+  <link rel="stylesheet" href="<?= base_url(); ?>/assets/css/datatables.min.css"/>
+  <script src="<?= base_url(); ?>/assets/js/jquery.dataTables.min.js"></script>
+  <script src="<?= base_url(); ?>/assets/js/datatables.min.js"></script>
 
 </head>
 
