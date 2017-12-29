@@ -1,6 +1,6 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
-$load = $this->db->query("SELECT COUNT(id) AS total FROM pendaftar");
+$load = $this->db->query("SELECT COUNT(id) AS total FROM pendaftar WHERE id NOT IN (SELECT id_pendaftar FROM konfirmasi)");
 $label = $load->row()->total;
 ?>
 <!doctype html>
