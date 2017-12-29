@@ -30,6 +30,7 @@
                 <?php
                 $i = 1;
                 foreach($admin as $item):
+                  if($item->username !== $this->session->userdata('uname_sudo')){
                 ?>
                   
                   <tr>
@@ -45,6 +46,7 @@
 
                 <?php
                 $i++;
+                }
                 endforeach;
                 ?>
 

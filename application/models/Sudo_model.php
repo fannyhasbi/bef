@@ -55,7 +55,7 @@ class Sudo_model extends CI_Model {
       'nama' => $this->purify($this->input->post('nama'))
     );
 
-    if($this->db->insert('admin'))
+    if($this->db->insert('admin', $data))
       return true;
     else
       return false;
@@ -83,6 +83,14 @@ class Sudo_model extends CI_Model {
     if($this->db->delete('peserta'))
       return true;
     else 
+      return false;
+  }
+
+  public function deleteAdmin($id_admin){
+    $this->db->where('id', $id_admin);
+    if($this->db->delete('admin'))
+      return true;
+    else
       return false;
   }
 
