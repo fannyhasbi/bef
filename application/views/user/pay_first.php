@@ -1,3 +1,4 @@
+<?php defined('BASEPATH') OR exit('No direct script access allowed'); ?>
 <!doctype html>
 <html lang="en">
 <head>

@@ -1,5 +1,6 @@
 <?php
-$load = $this->db->query("SELECT COUNT(id) AS total FROM pendaftar WHERE bukti IS NOT NULL AND id NOT IN (SELECT id_pendaftar FROM konfirmasi);");
+defined('BASEPATH') OR exit('No direct script access allowed');
+$load = $this->db->query("SELECT COUNT(id) AS total FROM pendaftar WHERE id NOT IN (SELECT id_pendaftar FROM konfirmasi)");
 $label = $load->row()->total;
 ?>
 <!doctype html>
@@ -38,9 +39,9 @@ $label = $load->row()->total;
   <script src="<?= base_url(); ?>/assets/js/register.js"></script>
 
   <!-- DataTable -->
-  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.16/datatables.min.css"/>
-  <script type="text/javascript" src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
-  <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.16/datatables.min.js"></script>
+  <link rel="stylesheet" href="<?= base_url(); ?>/assets/css/datatables.min.css"/>
+  <script src="<?= base_url(); ?>/assets/js/jquery.dataTables.min.js"></script>
+  <script src="<?= base_url(); ?>/assets/js/datatables.min.js"></script>
 
 </head>
 
@@ -122,7 +123,7 @@ $(document).ready(function(){
       message: msg
     }, {
       type: type,
-      timer: 20000,
+      timer: 3000,
       placement: {
         from: 'top',
         align: 'center'

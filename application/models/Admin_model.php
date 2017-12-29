@@ -6,19 +6,6 @@ class Admin_model extends CI_Model {
     date_default_timezone_set('Asia/Jakarta');
   }
 
-  private function purify_slug($r){
-    $tags = ['.',',','/','\'','"','?','!','\\','=','+','*','&','^','%','$','@'];
-    
-    $r = str_replace($tags, '', $r);
-    $r = str_replace(' ', '-', $r);
-    $r = htmlspecialchars($r);
-    $r = stripslashes($r);
-    $r = trim($r);
-    $r = strtolower($r);
-
-    return $r;
-  }
-
   private function purify($r){
     $r = htmlspecialchars($r);
     $r = stripslashes($r);
