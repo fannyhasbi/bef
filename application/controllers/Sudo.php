@@ -86,24 +86,27 @@ class Sudo extends CI_Controller {
     redirect(site_url('sudo/konfirmasi'));
   }
 
-  public function cancel($id_pendaftar){
-    $this->cekLogin();
+  // In memoriam
+  // Akan konyol jika sudah dikonfirmasi tapi dibatalkan :(
+  // Gunakan jika perlu
+  // public function cancel($id_pendaftar){
+  //   $this->cekLogin();
 
-    if($this->sudo_model->checkIdPendaftar($id_pendaftar)->num_rows() > 0){
-      if($this->sudo_model->deleteConfirm($id_pendaftar)){
-        // I dunno what is this, I don't use if else again wkwkwk :v
-        $this->sudo_model->deletePeserta($id_pendaftar);
-        $this->session->set_flashdata('msg', 'Konfirmasi berhasil dibatalkan.');
-        $this->session->set_flashdata('type', 'success');
-      }
-      else {
-        $this->session->set_flashdata('msg', 'Terjadi kesalahan, gagal mengkonfirmasi.');
-        $this->session->set_flashdata('type', 'danger');
-      }
-    }
+  //   if($this->sudo_model->checkIdPendaftar($id_pendaftar)->num_rows() > 0){
+  //     if($this->sudo_model->deleteConfirm($id_pendaftar)){
+  //       // I dunno what is this, I don't use if else again wkwkwk :v
+  //       $this->sudo_model->deletePeserta($id_pendaftar);
+  //       $this->session->set_flashdata('msg', 'Konfirmasi berhasil dibatalkan.');
+  //       $this->session->set_flashdata('type', 'success');
+  //     }
+  //     else {
+  //       $this->session->set_flashdata('msg', 'Terjadi kesalahan, gagal mengkonfirmasi.');
+  //       $this->session->set_flashdata('type', 'danger');
+  //     }
+  //   }
 
-    redirect(site_url('sudo/konfirmasi'));
-  }
+  //   redirect(site_url('sudo/konfirmasi'));
+  // }
 
   public function konfirmasi(){
     $this->cekLogin();

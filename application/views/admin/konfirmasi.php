@@ -31,14 +31,8 @@
                     <td><?= $item->nama; ?></td>
                     <td class="text-center">
                       <?php if($item->konfirmasi == 1){ ?>
-                        <?php if($item->bukti != null){ ?>
-                          <a href="<?= base_url('foto/bukti/'. $item->bukti); ?>" rel="tooltip" title="Lihat bukti" class="btn btn-info btn-simple btn-xs" target="_blank">
-                            <i class="material-icons">search</i> Lihat
-                          </a>
-                        <?php } ?>
-
-                        <a href="<?= base_url('me/cancel/'. $item->refId); ?>" rel="tooltip" title="Batalkan konfirmasi" class="btn btn-warning btn-simple btn-xs">
-                          <i class="material-icons">highlight_off</i> Batalkan
+                        <a href="<?= base_url('foto/bukti/'. $item->bukti); ?>" rel="tooltip" title="Lihat bukti" class="btn btn-info btn-simple btn-xs" target="_blank">
+                          <i class="material-icons">search</i> Lihat
                         </a>
                       <?php } else { ?>
                         <?php if($item->bukti != null){ ?>
@@ -51,6 +45,10 @@
                           <i class="material-icons">check_circle</i> Konfirmasi
                         </a>
                       <?php } ?>
+
+                      <button class="btn btn-danger btn-simple btn-xs" title="Hapus peserta" rel="tooltip" onclick="hapus(<?= $item->refId; ?>)">
+                        <i class="material-icons">close</i> Hapus
+                      </button>
                     </td>
                   </tr>
                 <?php
@@ -76,4 +74,11 @@
         "pagingType": "numbers"
     });
   });
+
+  function hapus(id){
+    var j = confirm("Yakin ingin menghapus?");
+    if(j){
+      window.location = "<?= site_url('me/del-peserta/'); ?>"+ id;
+    }
+  }
 </script>

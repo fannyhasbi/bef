@@ -77,6 +77,12 @@ class Admin_model extends CI_Model {
       return false;
   }
 
+  public function deletePendaftar($id_pendaftar){
+    $this->db->where('id', $id_pendaftar);
+    // ga pake if lese wkwwk
+    $this->db->delete('pendaftar');
+  }
+
   public function getAdmin(){
     $data = array(
       'username' => $this->purify($this->input->post('username'))
