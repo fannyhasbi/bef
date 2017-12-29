@@ -18,6 +18,15 @@ $route['me/confirm/(:num)'] = 'admin/confirm/$1';
 $route['me/cancel/(:num)'] = 'admin/cancel/$1';
 $route['me/konfirmasi'] = 'admin/konfirmasi';
 
+// Super admin
+$route['sudo'] = 'sudo';
+$route['sudo/login'] = 'sudo/login';
+$route['sudo/ganti_password'] = 'sudo/ganti_pass';
+$route['sudo/confirm/(:num)'] = 'sudo/confirm/$1';
+$route['sudo/cancel/(:num)'] = 'sudo/cancel/$1';
+$route['sudo/konfirmasi'] = 'sudo/konfirmasi';
+$route['sudo/add-admin'] = 'sudo/add_admin';
+
 $route['default_controller'] = 'home';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
