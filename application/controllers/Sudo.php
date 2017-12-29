@@ -180,13 +180,15 @@ class Sudo extends CI_Controller {
   public function del_admin($id_admin){
     $this->cekLogin();
 
-    if($this->sudo_model->deleteAdmin($id_admin)){
-      $this->session->set_flashdata('msg', 'Berhasil menghapus admin');
-      $this->session->set_flashdata('type', 'success');
-    }
-    else {
-      $this->session->set_flashdata('msg', 'Terjadi kesalahan, gagal menghapus admin.');
-      $this->session->set_flashdata('type', 'danger');
+    if($this->sudo_model->checkIdAdmin($id_admin)->num_rows() > 0){
+      if($this->sudo_model->deleteAdmin($id_admin)){
+        $this->session->set_flashdata('msg', 'Berhasil menghapus admin');
+        $this->session->set_flashdata('type', 'success');
+      }
+      else {
+        $this->session->set_flashdata('msg', 'Terjadi kesalahan, gagal menghapus admin.');
+        $this->session->set_flashdata('type', 'danger');
+      }
     }
 
     redirect(site_url('sudo/admin'));

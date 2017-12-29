@@ -25,6 +25,10 @@ class Admin_model extends CI_Model {
     return $this->db->get_where('pendaftar', ['id' => $id]);
   }
 
+  public function checkIdAdmin($id){
+    return $this->db->get_where('admin', ['id' => $id]);
+  }
+
   public function addConfirm($id_pendaftar){
     $data = array(
       'id_admin' => $this->session->userdata('id_admin'),
