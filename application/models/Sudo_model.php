@@ -86,6 +86,12 @@ class Sudo_model extends CI_Model {
       return false;
   }
 
+  public function deletePendaftar($id_pendaftar){
+    $this->db->where('id', $id_pendaftar);
+    // ga pake if lese wkwwk
+    $this->db->delete('pendaftar');
+  }
+
   public function deleteAdmin($id_admin){
     $this->db->where('id', $id_admin);
     if($this->db->delete('admin'))

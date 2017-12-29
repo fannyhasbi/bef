@@ -71,7 +71,7 @@ $label = $load->row()->total;
             <p>Ubah Password</p>
           </a>
         </li>
-        <li <?= uri_string() == 'sudo/admin' ? 'class="active"' : ''; ?>>
+        <li <?= uri_string()=='sudo/admin'||uri_string()=='sudo/add-admin' ? 'class="active"' : ''; ?>>
           <a href="<?= site_url('sudo/admin'); ?>">
             <i class="material-icons">account_circle</i>
             <p>Admin</p>

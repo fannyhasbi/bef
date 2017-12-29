@@ -189,4 +189,24 @@ class Sudo extends CI_Controller {
     redirect(site_url('sudo/admin'));
   }
 
+  public function del_peserta($id_pendaftar){
+    $this->cekLogin();
+
+    if($this->sudo_model->checkIdPendaftar($id_pendaftar)->num_rows() > 0){
+      if($this->sudo_model->deleteConfirm($id_pendaftar)){
+        // I dunno what is this, I don't use if else again wkwkwk :v
+        $this->sudo_model->deletePeserta($id_pendaftar);
+        $this->sudo_model->deletePendaftar($id_pendaftar);
+        $this->session->set_flashdata('msg', 'Peserta berhasil dihapus.');
+        $this->session->set_flashdata('type', 'success');
+      }
+      else {
+        $this->session->set_flashdata('msg', 'Terjadi kesalahan, gagal menghapus.');
+        $this->session->set_flashdata('type', 'danger');
+      }
+    }
+
+    redirect(site_url('sudo/konfirmasi'));
+  }
+
 }

@@ -27,6 +27,7 @@ $route['sudo/cancel/(:num)'] = 'sudo/cancel/$1';
 $route['sudo/konfirmasi'] = 'sudo/konfirmasi';
 $route['sudo/add-admin'] = 'sudo/add_admin';
 $route['sudo/del-admin/(:num)'] = 'sudo/del_admin/$1';
+$route['sudo/del-peserta/(:num)'] = 'sudo/del_peserta/$1';
 
 $route['default_controller'] = 'home';
 $route['404_override'] = '';

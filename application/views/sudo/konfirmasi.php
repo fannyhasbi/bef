@@ -37,7 +37,7 @@
                           </a>
                         <?php } ?>
 
-                        <a href="<?= base_url('sudo/cancel/'. $item->refId); ?>" rel="tooltip" title="Batalkan konfirmasi" class="btn btn-danger btn-simple btn-xs">
+                        <a href="<?= base_url('sudo/cancel/'. $item->refId); ?>" rel="tooltip" title="Batalkan konfirmasi" class="btn btn-warning btn-simple btn-xs">
                           <i class="material-icons">highlight_off</i> Batalkan
                         </a>
                       <?php } else { ?>
@@ -51,6 +51,10 @@
                           <i class="material-icons">check_circle</i> Konfirmasi
                         </a>
                       <?php } ?>
+
+                      <button class="btn btn-danger btn-simple btn-xs" title="Hapus peserta" rel="tooltip" onclick="hapus(<?= $item->refId; ?>)">
+                        <i class="material-icons">close</i> Hapus
+                      </button>
                     </td>
                   </tr>
                 <?php
@@ -76,4 +80,11 @@
         "pagingType": "numbers"
     });
   });
+
+  function hapus(id){
+    var j = confirm("Yakin ingin menghapus?");
+    if(j){
+      window.location = "<?= site_url('sudo/del-peserta/'); ?>"+ id;
+    }
+  }
 </script>

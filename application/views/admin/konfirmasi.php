@@ -37,7 +37,7 @@
                           </a>
                         <?php } ?>
 
-                        <a href="<?= base_url('me/cancel/'. $item->refId); ?>" rel="tooltip" title="Batalkan konfirmasi" class="btn btn-danger btn-simple btn-xs">
+                        <a href="<?= base_url('me/cancel/'. $item->refId); ?>" rel="tooltip" title="Batalkan konfirmasi" class="btn btn-warning btn-simple btn-xs">
                           <i class="material-icons">highlight_off</i> Batalkan
                         </a>
                       <?php } else { ?>
