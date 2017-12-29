@@ -21,6 +21,7 @@
                   <th>Kode</th>
                   <th>Nama</th>
                   <th>PTN</th>
+                  <th>Action</th>
                 </tr>
               </thead>
               <tbody>
@@ -31,6 +32,14 @@
                     <td><?= $item->kode; ?></td>
                     <td><?= $item->nama; ?></td>
                     <td><?= $item->nama_ptn; ?></td>
+                    <td>
+                      <a href="<?= base_url('sudo/edit-prodi/'. $item->kode); ?>" rel="tooltip" title="Edit prodi" class="btn btn-info btn-simple btn-xs">
+                        <i class="material-icons">description</i> Edit
+                      </a>
+                      <button class="btn btn-danger btn-simple btn-xs" title="Hapus prodi" rel="tooltip" onclick="hapus(<?= $item->kode; ?>)">
+                        <i class="material-icons">close</i> Hapus
+                      </button>
+                    </td>
                   </tr>
 
                 <?php endforeach; ?>
@@ -58,7 +67,7 @@
   function hapus(id){
     var j = confirm("Yakin ingin menghapus?");
     if(j){
-      window.location = "<?= site_url('sudo/del-peserta/'); ?>"+ id;
+      window.location = "<?= site_url('sudo/del-prodi/'); ?>"+ id;
     }
   }
 </script>

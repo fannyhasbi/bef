@@ -238,7 +238,7 @@ class Sudo extends CI_Controller {
         $this->session->set_flashdata('type', 'danger');
       }
 
-      redirect(site_url('sudo/ptn'));
+      redirect(site_url('sudo/add-ptn'));
     }
     else {
       $data['message'] = $this->session->flashdata('msg');
@@ -311,7 +311,7 @@ class Sudo extends CI_Controller {
         $this->session->set_flashdata('type', 'danger');
       }
 
-      redirect(site_url('sudo/prodi'));
+      redirect(site_url('sudo/add-prodi'));
     }
     else {
       $data['ptn'] = $this->sudo_model->getPTN();
@@ -321,6 +321,40 @@ class Sudo extends CI_Controller {
       $data['view_name'] = 'add_prodi';
       $this->load->view('sudo/index_view', $data);
     }
+  }
+
+  public function edit_prodi($kode){
+    $this->cekLogin();
+
+    if($this->input->post('edit')){
+      $this->sudo_model->updateProdi($kode);
+
+      $this->session->set_flashdata('msg', 'Berhasil memperbarui program studi.');
+      $this->session->set_flashdata('type', 'success');
+
+      redirect(site_url('sudo/prodi'));
+    }
+    else {
+      $data['prodi'] = $this->sudo_model->getProdiByKode($kode);
+      $data['ptn'] = $this->sudo_model->getPTN();
+
+      $data['message'] = $this->session->flashdata('msg');
+      $data['type'] = $this->session->flashdata('type');
+      $data['view_name'] = 'edit_prodi';
+      $this->load->view('sudo/index_view', $data);
+    }
+  }
+
+  public function del_prodi($kode){
+    $this->cekLogin();
+
+    if($this->sudo_model->checkProdi($kode)->num_rows() > 0){
+      $this->sudo_model->deleteProdi($kode);
+      $this->session->set_flashdata('msg', 'Berhasil menghapus program studi.');
+      $this->session->set_flashdata('type', 'success');
+    }
+
+    redirect(site_url('sudo/prodi'));
   }
 
 }

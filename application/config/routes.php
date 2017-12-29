@@ -39,6 +39,8 @@ $route['sudo/del-ptn/(:any)'] = 'sudo/del_ptn/$1';
 // Prodi
 $route['sudo/prodi'] = 'sudo/prodi';
 $route['sudo/add-prodi'] = 'sudo/add_prodi';
+$route['sudo/edit-prodi/(:any)'] = 'sudo/edit_prodi/$1';
+$route['sudo/del-prodi/(:any)'] = 'sudo/del_prodi/$1';
 
 $route['default_controller'] = 'home';
 $route['404_override'] = '';

@@ -25,6 +25,10 @@ class Sudo_model extends CI_Model {
     return $this->db->get_where('ptn', ['kode' => $kode]);
   }
 
+  public function checkProdi($kode){
+    return $this->db->get_where('prodi', ['kode' => $kode]);
+  }
+
   public function addConfirm($id_pendaftar){
     $data = array(
       'id_admin' => $this->session->userdata('id_sudo'),
@@ -104,6 +108,17 @@ class Sudo_model extends CI_Model {
     $this->db->update('ptn', ['nama' => $this->purify($this->input->post('nama'))]);
   }
 
+  public function updateProdi($kode){
+    $data = array(
+      'kode' => $this->purify($this->input->post('kode')),
+      'nama' => $this->purify($this->input->post('nama')),
+      'ptn'  => $this->input->post('ptn')
+    );
+
+    $this->db->where('kode', $kode);
+    $this->db->update('prodi', $data);
+  }
+
   public function deleteConfirm($id_pendaftar){
     $this->db->where('id_pendaftar', $id_pendaftar);
     if($this->db->delete('konfirmasi'))
@@ -147,6 +162,11 @@ class Sudo_model extends CI_Model {
       return false;
   }
 
+  public function deleteProdi($kode){
+    $this->db->where('kode', $kode);
+    $this->db->delete('prodi');
+  }
+
   public function getSudo(){
     $data = array(
       'username' => $this->purify($this->input->post('username'))
@@ -184,5 +204,10 @@ class Sudo_model extends CI_Model {
   public function getProdi(){
     $q = $this->db->query("SELECT p.kode, p.nama, n.nama AS nama_ptn FROM prodi p INNER JOIN ptn n ON p.ptn = n.kode");
     return $q->result();
+  }
+
+  public function getProdiByKode($kode){
+    $q = $this->db->get_where('prodi', ['kode' => $kode]);
+    return $q->row();
   }
 }
