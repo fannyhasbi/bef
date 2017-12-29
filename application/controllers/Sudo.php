@@ -86,24 +86,27 @@ class Sudo extends CI_Controller {
     redirect(site_url('sudo/konfirmasi'));
   }
 
-  public function cancel($id_pendaftar){
-    $this->cekLogin();
+  // In memoriam
+  // Akan konyol jika sudah dikonfirmasi tapi dibatalkan :(
+  // Gunakan jika perlu
+  // public function cancel($id_pendaftar){
+  //   $this->cekLogin();
 
-    if($this->sudo_model->checkIdPendaftar($id_pendaftar)->num_rows() > 0){
-      if($this->sudo_model->deleteConfirm($id_pendaftar)){
-        // I dunno what is this, I don't use if else again wkwkwk :v
-        $this->sudo_model->deletePeserta($id_pendaftar);
-        $this->session->set_flashdata('msg', 'Konfirmasi berhasil dibatalkan.');
-        $this->session->set_flashdata('type', 'success');
-      }
-      else {
-        $this->session->set_flashdata('msg', 'Terjadi kesalahan, gagal mengkonfirmasi.');
-        $this->session->set_flashdata('type', 'danger');
-      }
-    }
+  //   if($this->sudo_model->checkIdPendaftar($id_pendaftar)->num_rows() > 0){
+  //     if($this->sudo_model->deleteConfirm($id_pendaftar)){
+  //       // I dunno what is this, I don't use if else again wkwkwk :v
+  //       $this->sudo_model->deletePeserta($id_pendaftar);
+  //       $this->session->set_flashdata('msg', 'Konfirmasi berhasil dibatalkan.');
+  //       $this->session->set_flashdata('type', 'success');
+  //     }
+  //     else {
+  //       $this->session->set_flashdata('msg', 'Terjadi kesalahan, gagal mengkonfirmasi.');
+  //       $this->session->set_flashdata('type', 'danger');
+  //     }
+  //   }
 
-    redirect(site_url('sudo/konfirmasi'));
-  }
+  //   redirect(site_url('sudo/konfirmasi'));
+  // }
 
   public function konfirmasi(){
     $this->cekLogin();
@@ -172,6 +175,186 @@ class Sudo extends CI_Controller {
       $data['view_name'] = 'add_admin';
       $this->load->view('sudo/index_view', $data);
     }
+  }
+
+  public function del_admin($id_admin){
+    $this->cekLogin();
+
+    if($this->sudo_model->checkIdAdmin($id_admin)->num_rows() > 0){
+      if($this->sudo_model->deleteAdmin($id_admin)){
+        $this->session->set_flashdata('msg', 'Berhasil menghapus admin');
+        $this->session->set_flashdata('type', 'success');
+      }
+      else {
+        $this->session->set_flashdata('msg', 'Terjadi kesalahan, gagal menghapus admin.');
+        $this->session->set_flashdata('type', 'danger');
+      }
+    }
+
+    redirect(site_url('sudo/admin'));
+  }
+
+  public function del_peserta($id_pendaftar){
+    $this->cekLogin();
+
+    if($this->sudo_model->checkIdPendaftar($id_pendaftar)->num_rows() > 0){
+      if($this->sudo_model->deleteConfirm($id_pendaftar)){
+        // I dunno what is this, I don't use if else again wkwkwk :v
+        $this->sudo_model->deletePeserta($id_pendaftar);
+        $this->sudo_model->deletePendaftar($id_pendaftar);
+        $this->session->set_flashdata('msg', 'Peserta berhasil dihapus.');
+        $this->session->set_flashdata('type', 'success');
+      }
+      else {
+        $this->session->set_flashdata('msg', 'Terjadi kesalahan, gagal menghapus.');
+        $this->session->set_flashdata('type', 'danger');
+      }
+    }
+
+    redirect(site_url('sudo/konfirmasi'));
+  }
+
+  public function ptn(){
+    $this->cekLogin();
+
+    $data['ptn'] = $this->sudo_model->getPTN();
+
+    $data['message'] = $this->session->flashdata('msg');
+    $data['type'] = $this->session->flashdata('type');
+    $data['view_name'] = 'ptn';
+    $this->load->view('sudo/index_view', $data);
+  }
+
+  public function add_ptn(){
+    $this->cekLogin();
+
+    if($this->input->post('tambah')){
+      if($this->sudo_model->addPTN()){
+        $this->session->set_flashdata('msg', 'Berhasil menambahkan PTN.');
+        $this->session->set_flashdata('type', 'success');
+      }
+      else {
+        $this->session->set_flashdata('msg', 'Terjadi kesalahan, gagal menambahkan PTN.');
+        $this->session->set_flashdata('type', 'danger');
+      }
+
+      redirect(site_url('sudo/add-ptn'));
+    }
+    else {
+      $data['message'] = $this->session->flashdata('msg');
+      $data['type'] = $this->session->flashdata('type');
+      $data['view_name'] = 'add_ptn';
+      $this->load->view('sudo/index_view', $data);
+    }
+  }
+
+  public function edit_ptn($kode){
+    $this->cekLogin();
+
+    if($this->input->post('edit')){
+      $this->sudo_model->updatePTN($kode);
+
+      $this->session->set_flashdata('msg', 'Berhasil memperbarui PTN.');
+      $this->session->set_flashdata('type', 'success');
+
+      redirect(site_url('sudo/ptn'));
+    }
+    else {
+      $data['ptn'] = $this->sudo_model->getPTNByKode($kode);
+
+      $data['message'] = $this->session->flashdata('msg');
+      $data['type'] = $this->session->flashdata('type');
+      $data['view_name'] = 'edit_ptn';
+      $this->load->view('sudo/index_view', $data);
+    }
+  }
+
+  public function del_ptn($kode){
+    $this->cekLogin();
+
+    if($this->sudo_model->checkPTN($kode)->num_rows() > 0){
+      if($this->sudo_model->deleteAllProdi($kode)){
+        $this->sudo_model->deletePTN($kode);
+        $this->session->set_flashdata('msg', 'Berhasil menghapus PTN.');
+        $this->session->set_flashdata('type', 'success');
+      }
+      else {
+        $this->session->set_flashdata('msg', 'Terjadi kesalahan, gagal menghapus PTN.');
+        $this->session->set_flashdata('type', 'success');
+      }
+    }
+
+    redirect(site_url('sudo/ptn'));
+  }
+
+  public function prodi(){
+    $this->cekLogin();
+
+    $data['prodi'] = $this->sudo_model->getProdi();
+
+    $data['message'] = $this->session->flashdata('msg');
+    $data['type'] = $this->session->flashdata('type');
+    $data['view_name'] = 'prodi';
+    $this->load->view('sudo/index_view', $data);
+  }
+
+  public function add_prodi(){
+    $this->cekLogin();
+
+    if($this->input->post('tambah')){
+      if($this->sudo_model->addProdi()){
+        $this->session->set_flashdata('msg', 'Berhasil menambahkan prodi.');
+        $this->session->set_flashdata('type', 'success');
+      }
+      else {
+        $this->session->set_flashdata('msg', 'Terjadi kesalahan, gagal menambahkan prodi.');
+        $this->session->set_flashdata('type', 'danger');
+      }
+
+      redirect(site_url('sudo/add-prodi'));
+    }
+    else {
+      $data['ptn'] = $this->sudo_model->getPTN();
+
+      $data['message'] = $this->session->flashdata('msg');
+      $data['type'] = $this->session->flashdata('type');
+      $data['view_name'] = 'add_prodi';
+      $this->load->view('sudo/index_view', $data);
+    }
+  }
+
+  public function edit_prodi($kode){
+    $this->cekLogin();
+
+    if($this->input->post('edit')){
+      $this->sudo_model->updateProdi($kode);
+
+      $this->session->set_flashdata('msg', 'Berhasil memperbarui program studi.');
+      $this->session->set_flashdata('type', 'success');
+
+      redirect(site_url('sudo/prodi'));
+    }
+    else {
+      $data['prodi'] = $this->sudo_model->getProdiByKode($kode);
+      $data['ptn'] = $this->sudo_model->getPTN();
+
+      $data['message'] = $this->session->flashdata('msg');
+      $data['type'] = $this->session->flashdata('type');
+      $data['view_name'] = 'edit_prodi';
+      $this->load->view('sudo/index_view', $data);
+    }
+  }
+
+  public function del_prodi($kode){
+    $this->cekLogin();
+
+    if($this->sudo_model->checkProdi($kode)->num_rows() > 0){
+      $this->sudo_model->deleteProdi($kode);
+      $this->session->set_flashdata('msg', 'Berhasil menghapus program studi.');
+      $this->session->set_flashdata('type', 'success');
+    }
+
+    redirect(site_url('sudo/prodi'));
   }
 
 }
