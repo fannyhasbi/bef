@@ -2,19 +2,6 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class User_model extends CI_Model {
-  private function purify_slug($r){
-    $tags = ['.',',','/','\'','"','?','!','\\','=','+','*','&','^','%','$','@'];
-    
-    $r = str_replace($tags, '', $r);
-    $r = str_replace(' ', '-', $r);
-    $r = htmlspecialchars($r);
-    $r = stripslashes($r);
-    $r = trim($r);
-    $r = strtolower($r);
-
-    return $r;
-  }
-
   private function purify($r){
     $r = htmlspecialchars($r);
     $r = stripslashes($r);

@@ -1,5 +1,6 @@
 <?php
-$load = $this->db->query("SELECT COUNT(id) AS total FROM pendaftar WHERE bukti IS NOT NULL AND id NOT IN (SELECT id_pendaftar FROM konfirmasi);");
+defined('BASEPATH') OR exit('No direct script access allowed');
+$load = $this->db->query("SELECT COUNT(id) AS total FROM pendaftar");
 $label = $load->row()->total;
 ?>
 <!doctype html>
@@ -122,7 +123,7 @@ $(document).ready(function(){
       message: msg
     }, {
       type: type,
-      timer: 20000,
+      timer: 3000,
       placement: {
         from: 'top',
         align: 'center'
