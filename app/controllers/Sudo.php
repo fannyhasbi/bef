@@ -51,6 +51,9 @@ class Sudo extends CI_Controller {
   }
 
   public function login(){
+    if($this->session->userdata('login_sudo'))
+      redirect(site_url('sudo'));
+
     if($this->input->post('masuk')){
       if($this->sudo_model->check()->num_rows() > 0){
         $sudo = $this->sudo_model->getSudo();
@@ -72,7 +75,7 @@ class Sudo extends CI_Controller {
         $this->session->set_flashdata('msg', '<div class="alert alert-danger">Username atau password salah</div>');
       }
 
-      redirect(site_url('sudo'));
+      redirect(site_url('sudo/login'));
     }
     else {
       $data['message'] = $this->session->flashdata('msg');
