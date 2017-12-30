@@ -34,8 +34,8 @@
         <div class="col-md-12">
           <div class="mu-register-area">
             <div class="mu-title-area">
-              <h2 class="mu-title">404</h2>
-              <p>Halaman tidak ditemukan. Kembali ke <a href="<?= site_url(); ?>">BEF 2018</a></p>
+              <h2 class="mu-title">BREBES EDUCATION FAIR</h2>
+              <p>Situs masih dalam pengembangan :)</p>
             </div>
           </div>
         </div>

@@ -44,5 +44,5 @@ $route['sudo/edit-prodi/(:any)'] = 'sudo/edit_prodi/$1';
 $route['sudo/del-prodi/(:any)'] = 'sudo/del_prodi/$1';
 
 $route['default_controller'] = 'home';
-$route['404_override'] = '';
+$route['404_override'] = 'home/notfound';
 $route['translate_uri_dashes'] = FALSE;

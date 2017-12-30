@@ -103,7 +103,7 @@
               <div class="card-content">
                 
                 <!-- Form ubah profil -->
-                <form action="<?= site_url('save'); ?>" method="post" enctype="multipart/form-data">
+                <form id="bio" action="<?= site_url('save'); ?>" method="post" onsubmit="return confirm('Pastikan seluruh data terisi dengan benar');">
                   <div class="row">
                     <div class="col-md-12">
                       <div class="form-group label-floating">
@@ -218,7 +218,7 @@ $(document).ready(function(){
 $(function () {
   $('#datepicker').datepicker({
     autoclose: true,
-    format: "yyyy-mm-d"
+    format: "yyyy-mm-dd"
   });
 });
 </script>
