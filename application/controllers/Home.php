@@ -10,7 +10,7 @@ class Home extends CI_Controller {
     $q = $this->db->get('publish');
 
     if($q->row()->publish == 0){
-      $this->load->view('home/maintenance.php');
+      $this->load->view('home/coming_soon.php');
     }
     else {
   		$this->load->view('home/index');
