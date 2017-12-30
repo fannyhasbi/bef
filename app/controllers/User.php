@@ -129,6 +129,8 @@ class User extends CI_Controller {
   }
 
   public function save(){
+    $this->cekLogin();
+
     if($this->user_model->checkSaved($this->session->userdata('id'))->saved == 1){
       redirect(site_url('dashboard'));
     }
@@ -160,6 +162,8 @@ class User extends CI_Controller {
   }
 
   public function pay(){
+    $this->cekLogin();
+
     if($this->user_model->checkConfirm($this->session->userdata('id'))->num_rows() > 0)
       redirect(site_url('dashboard'));
 
@@ -209,6 +213,8 @@ class User extends CI_Controller {
   }
 
   public function profil(){
+    $this->cekLogin();
+
     if($this->input->post('simpan')){
       $nis  = $this->input->post('nis');
       $sek  = $this->input->post('sekolah');
@@ -268,6 +274,8 @@ class User extends CI_Controller {
   }
 
   public function ganti_pass(){
+    $this->cekLogin();
+    
     if($this->input->post('ganti')){
       if($this->user_model->updatePass($this->input->post('password'))){
         $this->session->set_flashdata('msg', 'Password berhasil diperbarui.');
