@@ -15,7 +15,7 @@
   <link href="<?= base_url(); ?>/assets/css/material-dashboard.css" rel="stylesheet" />
   <!--     Fonts and icons     -->
   <link href="<?= base_url(); ?>/assets/css/font-awesome.min.css" rel="stylesheet">
-  <link href='http://fonts.googleapis.com/css?family=Roboto:400,700,300|Material+Icons' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Roboto:400,700,300|Material+Icons' rel='stylesheet' type='text/css'>
 
   <!--   Core JS Files   -->
   <script src="<?= base_url(); ?>/assets/js/jquery-3.2.1.min.js" type="text/javascript"></script>

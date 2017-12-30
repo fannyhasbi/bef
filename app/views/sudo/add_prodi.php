@@ -46,7 +46,7 @@
               <div class="col-md-12">
                 <div class="form-group">
                   <label class="control-label">Jenis</label>
-                  <select class="form-control" name="ptn">
+                  <select class="form-control" name="jenis">
                     <option value="1">SAINTEK</option>
                     <option value="2">SOSHUM</option>
                   </select>

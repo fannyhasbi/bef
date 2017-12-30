@@ -93,7 +93,8 @@ class Sudo_model extends CI_Model {
     $data = array(
       'kode' => $this->purify($this->input->post('kode')),
       'nama' => $this->purify($this->input->post('nama')),
-      'ptn' => $this->input->post('ptn')
+      'ptn' => $this->input->post('ptn'),
+      'jenis' => $this->input->post('jenis')
     );
 
     if($this->db->insert('prodi', $data))

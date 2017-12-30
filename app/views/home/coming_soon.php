@@ -36,7 +36,8 @@
             <div class="mu-title-area">
               <h2 class="mu-title">
                 COMING SOON<br>
-                BREBES EDUCATION FAIR
+                BREBES EDUCATION FAIR<br>
+                2018
               </h2>
             </div>
           </div>

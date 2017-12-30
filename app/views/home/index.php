@@ -478,7 +478,7 @@
 					</div>
 				</div>
 				<div class="mu-footer-bottom">
-					<p class="mu-copy-right">&copy; Copyright <a rel="nofollow" href="http://markups.io">markups.io</a>. All right reserved.</p>
+					<p class="mu-copy-right">&copy; Panitia Brebes Education Fair 2018</p>
 				</div>
 			</div>
 		</div>
