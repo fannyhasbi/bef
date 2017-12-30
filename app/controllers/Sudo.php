@@ -20,6 +20,8 @@ class Sudo extends CI_Controller {
       'highest' => $this->admin_model->getGrafikTertinggi() // mendapatkan nilai tertinggi dari pendaftar ataupun peserta
     );
 
+    $data['activate'] = $this->sudo_model->getActivate();
+
     $data['count'] = $this->admin_model->getCount();
     $data['view_name'] = 'home';
     $this->load->view('sudo/index_view', $data);
@@ -28,6 +30,24 @@ class Sudo extends CI_Controller {
   private function cekLogin(){
     if(!$this->session->userdata('login_sudo'))
       show_404();
+  }
+
+  public function activate(){
+    $cek = $this->sudo_model->getActivate();
+
+    if($cek == 1){
+      $this->sudo_model->activate();
+      $this->session->set_flashdata('msg', 'Website berhasil diaktifkan.');
+      $this->session->set_flashdata('type', 'success');
+    }
+    else {
+      $this->sudo_model->deactivate();
+      $this->session->set_flashdata('msg', 'Website berhasil dimatikan.');
+      $this->session->set_flashdata('type', 'success');
+    }
+
+
+    redirect(site_url('sudo'));
   }
 
   public function login(){

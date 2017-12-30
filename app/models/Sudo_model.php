@@ -10,6 +10,14 @@ class Sudo_model extends CI_Model {
     return $r;
   }
 
+  public function activate(){
+    $this->db->update('publish', ['status' => 2]);
+  }
+
+  public function deactivate(){
+    $this->db->update('publish', ['status' => 1]);
+  }
+
   public function check(){
     $data = array(
       'username' => $this->purify($this->input->post('username'))
@@ -209,5 +217,10 @@ class Sudo_model extends CI_Model {
   public function getProdiByKode($kode){
     $q = $this->db->get_where('prodi', ['kode' => $kode]);
     return $q->row();
+  }
+
+  public function getActivate(){
+    $q = $this->db->get('publish');
+    return $q->row()->status;
   }
 }

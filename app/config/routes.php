@@ -24,6 +24,7 @@ $route['me/del-peserta/(:num)'] = 'admin/del_peserta/$1';
 $route['sudo'] = 'sudo';
 $route['sudo/login'] = 'sudo/login';
 $route['sudo/ganti_password'] = 'sudo/ganti_pass';
+$route['sudo/activate'] = 'sudo/activate';
 $route['sudo/confirm/(:num)'] = 'sudo/confirm/$1';
 /* $route['sudo/cancel/(:num)'] = 'sudo/cancel/$1';*/
 $route['sudo/konfirmasi'] = 'sudo/konfirmasi';
