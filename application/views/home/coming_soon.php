@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>404 Not Found | Brebes Education Fair 2018</title>
+  <title>Brebes Education Fair 2018</title>
 
   <link rel="shortcut icon" type="image/icon" href="<?= base_url();?>/assets/images/favicon.ico"/>
   <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
@@ -34,8 +34,10 @@
         <div class="col-md-12">
           <div class="mu-register-area">
             <div class="mu-title-area">
-              <h2 class="mu-title">404</h2>
-              <p>Halaman tidak ditemukan. Kembali ke <a href="<?= site_url(); ?>">BEF 2018</a></p>
+              <h2 class="mu-title">
+                COMING SOON<br>
+                BREBES EDUCATION FAIR
+              </h2>
             </div>
           </div>
         </div>

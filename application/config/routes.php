@@ -6,6 +6,7 @@ $route['dashboard'] = 'user';
 $route['daftar']= 'user/daftar';
 $route['masuk'] = 'user/login';
 $route['keluar']= 'user/logout';
+$route['save'] = 'user/save';
 $route['pay'] = 'user/pay';
 $route['profil'] = 'user/profil';
 $route['ganti_password'] = 'user/ganti_pass';
@@ -43,5 +44,5 @@ $route['sudo/edit-prodi/(:any)'] = 'sudo/edit_prodi/$1';
 $route['sudo/del-prodi/(:any)'] = 'sudo/del_prodi/$1';
 
 $route['default_controller'] = 'home';
-$route['404_override'] = '';
+$route['404_override'] = 'home/notfound';
 $route['translate_uri_dashes'] = FALSE;

@@ -8,14 +8,21 @@ class User extends CI_Controller {
   }
 
   public function index(){
-    $konfirmasi = $this->user_model->checkConfirm($this->session->userdata('id'));
+    $saved = $this->user_model->checkSaved($this->session->userdata('id'));
 
-    if($konfirmasi->num_rows() > 0) {
-      $this->profil();
+    if($saved->saved == 0){
+      $this->save();
     }
     else {
-      $this->pay();
+      $konfirmasi = $this->user_model->checkConfirm($this->session->userdata('id'));
+      if($konfirmasi->num_rows() > 0) {
+        $this->profil();
+      }
+      else {
+        $this->pay();
+      }
     }
+
   }
 
   private function cekLogin(){
@@ -119,6 +126,36 @@ class User extends CI_Controller {
       $data['message'] = $this->session->flashdata('msg');
       $this->load->view('user/daftar', $data);
     }
+  }
+
+  public function save(){
+    if($this->user_model->checkSaved($this->session->userdata('id'))->saved == 1){
+      redirect(site_url('dashboard'));
+    }
+    if($this->input->post('simpan')){
+      // double check
+      $ttl   = $this->input->post('ttl');
+      $alamat= $this->input->post('alamat');
+      $kodepos = $this->input->post('kodepos');
+      $telepon = $this->input->post('telepon');
+      $gender= $this->input->post('gender');
+
+      if($ttl!=null&&$alamat!=null&&$kodepos!=null&&$telepon!=null&&$gender!=null){
+        $this->user_model->addBiodata($this->session->userdata('id'));
+      }
+      else {
+        $this->session->set_flashdata('msg', 'Semua form harus diisi');
+        $this->session->set_flashdata('type', 'danger');
+      }
+
+      redirect(site_url('dashboard'));
+    }
+    else {
+      $data['bio'] = $this->user_model->getUserById($this->session->userdata('id'));
+      $data['message'] = $this->session->flashdata('msg');
+      $data['type'] = $this->session->flashdata('type');
+      $this->load->view('user/initial', $data);
+    }
 
   }
 
@@ -175,10 +212,6 @@ class User extends CI_Controller {
     if($this->input->post('simpan')){
       $nis  = $this->input->post('nis');
       $sek  = $this->input->post('sekolah');
-
-      // ga dipake dulu, bingung
-      $univ1= $this->input->post('univ1');
-      $univ2= $this->input->post('univ2');
 
       // cuma memastikan kalo user usil pake js injection :(
       if($nis!=null && $sek!=null){

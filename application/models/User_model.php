@@ -22,6 +22,12 @@ class User_model extends CI_Model {
     return $this->db->get_where('pendaftar', ['username' => $username]);
   }
 
+  public function checkSaved($id){
+    $this->db->select('saved');
+    $q = $this->db->get_where('pendaftar', ['id' => $id]);
+    return $q->row();
+  }
+
   public function checkConfirm($id){
     $data = array(
       'id_pendaftar' => $id
@@ -50,6 +56,21 @@ class User_model extends CI_Model {
     }
 
     return false;
+  }
+
+  public function addBiodata($id_pendaftar){
+    $data = array(
+      'alamat' => $this->purify($this->input->post('alamat')),
+      'kodepos'=> $this->purify($this->input->post('kodepos')),
+      'telp'   => $this->purify($this->input->post('telepon')),
+      'ttl'    => $this->purify($this->input->post('ttl')),
+      'gender' => $this->purify($this->input->post('gender')),
+      'tiket'  => $this->input->post('tiket'),
+      'saved'  => 1,
+    );
+
+    $this->db->where('id', $id_pendaftar);
+    $this->db->update('pendaftar', $data);
   }
 
   public function addBukti($alamat_bukti){
