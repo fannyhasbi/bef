@@ -20,6 +20,8 @@ class Sudo extends CI_Controller {
       'highest' => $this->admin_model->getGrafikTertinggi() // mendapatkan nilai tertinggi dari pendaftar ataupun peserta
     );
 
+    $data['activate'] = $this->sudo_model->getActivate();
+
     $data['count'] = $this->admin_model->getCount();
     $data['view_name'] = 'home';
     $this->load->view('sudo/index_view', $data);
@@ -30,7 +32,28 @@ class Sudo extends CI_Controller {
       show_404();
   }
 
+  public function activate(){
+    $cek = $this->sudo_model->getActivate();
+
+    if($cek == 1){
+      $this->sudo_model->activate();
+      $this->session->set_flashdata('msg', 'Website berhasil diaktifkan.');
+      $this->session->set_flashdata('type', 'success');
+    }
+    else {
+      $this->sudo_model->deactivate();
+      $this->session->set_flashdata('msg', 'Website berhasil dimatikan.');
+      $this->session->set_flashdata('type', 'success');
+    }
+
+
+    redirect(site_url('sudo'));
+  }
+
   public function login(){
+    if($this->session->userdata('login_sudo'))
+      redirect(site_url('sudo'));
+
     if($this->input->post('masuk')){
       if($this->sudo_model->check()->num_rows() > 0){
         $sudo = $this->sudo_model->getSudo();
@@ -52,7 +75,7 @@ class Sudo extends CI_Controller {
         $this->session->set_flashdata('msg', '<div class="alert alert-danger">Username atau password salah</div>');
       }
 
-      redirect(site_url('sudo'));
+      redirect(site_url('sudo/login'));
     }
     else {
       $data['message'] = $this->session->flashdata('msg');

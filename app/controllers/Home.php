@@ -9,7 +9,7 @@ class Home extends CI_Controller {
   public function index(){
     $q = $this->db->get('publish');
 
-    if($q->row()->publish == 0){
+    if($q->row()->status == 1){
       $this->load->view('home/coming_soon.php');
     }
     else {

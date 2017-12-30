@@ -49,5 +49,12 @@
         </div>
       </div>
     </div>
+    <div class="col-lg-6">
+      <?php if($activate == 1){ ?>
+        <a href="<?= site_url('sudo/activate'); ?>" class="btn btn-success btn-lg btn-block">AKTIFKAN WEB</a>
+      <?php } else { ?>
+        <a href="<?= site_url('sudo/activate'); ?>" class="btn btn-warning btn-lg btn-block">MATIKAN WEB</a>
+      <?php } ?>
+    </div>
   </div>
 </div>
