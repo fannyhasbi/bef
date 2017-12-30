@@ -6,6 +6,7 @@ $route['dashboard'] = 'user';
 $route['daftar']= 'user/daftar';
 $route['masuk'] = 'user/login';
 $route['keluar']= 'user/logout';
+$route['save'] = 'user/save';
 $route['pay'] = 'user/pay';
 $route['profil'] = 'user/profil';
 $route['ganti_password'] = 'user/ganti_pass';
