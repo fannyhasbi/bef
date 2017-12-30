@@ -267,7 +267,6 @@ class User extends CI_Controller {
       $data['message'] = $this->session->flashdata('msg');
       $data['type'] = $this->session->flashdata('type');
 
-      $data['profil'] = $this->user_model->getPesertaById($this->session->userdata('id'));
       $data['view_name'] = 'profil';
       $this->load->view('user/index_view', $data);
     }

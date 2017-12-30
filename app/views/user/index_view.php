@@ -46,7 +46,7 @@
         <li <?= uri_string() == 'dashboard' ? 'class="active"' : ''; ?>>
           <a href="<?= site_url('dashboard'); ?>">
             <i class="material-icons">person</i>
-            <p>Profil</p>
+            <p>Biodata</p>
           </a>
         </li>
         <li <?= uri_string() == 'ganti_password' ? 'class="active"' : ''; ?>>

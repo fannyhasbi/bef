@@ -125,9 +125,8 @@ class User_model extends CI_Model {
   }
 
   public function getPesertaById($id){
+    // select p.id_pendaftar, p.no_peserta, d.nama, p.nis, p.sekolah, p.foto, p.pil1, p.pil2, p.pil3 from peserta p join pendaftar d on p.id_pendaftar = d.id
     $q = $this->db->get_where('v_peserta', ['id_pendaftar' => $id]);
     return $q->row();
   }
-
-
 }
