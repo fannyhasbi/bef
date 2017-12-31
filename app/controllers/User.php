@@ -129,6 +129,8 @@ class User extends CI_Controller {
   }
 
   public function save(){
+    $this->cekLogin();
+
     if($this->user_model->checkSaved($this->session->userdata('id'))->saved == 1){
       redirect(site_url('dashboard'));
     }
@@ -154,12 +156,14 @@ class User extends CI_Controller {
       $data['bio'] = $this->user_model->getUserById($this->session->userdata('id'));
       $data['message'] = $this->session->flashdata('msg');
       $data['type'] = $this->session->flashdata('type');
-      $this->load->view('user/initial', $data);
+      $this->load->view('user/biodata', $data);
     }
 
   }
 
   public function pay(){
+    $this->cekLogin();
+
     if($this->user_model->checkConfirm($this->session->userdata('id'))->num_rows() > 0)
       redirect(site_url('dashboard'));
 
@@ -209,12 +213,16 @@ class User extends CI_Controller {
   }
 
   public function profil(){
+    $this->cekLogin();
+
     if($this->input->post('simpan')){
-      $nis  = $this->input->post('nis');
-      $sek  = $this->input->post('sekolah');
+      $nis = $this->input->post('nis');
+      $sek = $this->input->post('sekolah');
+      $jur = $this->input->post('jurusan');
+      $pro = $this->input->post('prodi1');
 
       // cuma memastikan kalo user usil pake js injection :(
-      if($nis!=null && $sek!=null){
+      if($nis!=null&&$sek!=null&&$jur!=null&&$pro!=null){
         $alamat_foto = $this->generateAlamatFoto();
 
         // jika alamat bukti udah ada di db
@@ -258,16 +266,18 @@ class User extends CI_Controller {
       redirect(site_url('dashboard'));
     }
     else {
+      $data['ptn'] = $this->user_model->getPTN();
+
       $data['message'] = $this->session->flashdata('msg');
       $data['type'] = $this->session->flashdata('type');
-
-      $data['profil'] = $this->user_model->getPesertaById($this->session->userdata('id'));
       $data['view_name'] = 'profil';
       $this->load->view('user/index_view', $data);
     }
   }
 
   public function ganti_pass(){
+    $this->cekLogin();
+    
     if($this->input->post('ganti')){
       if($this->user_model->updatePass($this->input->post('password'))){
         $this->session->set_flashdata('msg', 'Password berhasil diperbarui.');

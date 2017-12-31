@@ -96,7 +96,7 @@ class Admin_model extends CI_Model {
   }
   
   public function getBukti(){
-    // SELECT id AS refId, username, nama, bukti, IF((SELECT COUNT(id) FROM konfirmasi WHERE id_pendaftar = refId) > 0, 1, 0) AS konfirmasi FROM pendaftar
+    // SELECT id AS refId, username, nama, tiket, bukti, IF((SELECT COUNT(id) FROM konfirmasi WHERE id_pendaftar = refId) > 0, 1, 0) AS konfirmasi FROM pendaftar
     $q = $this->db->get("v_konfirmasi");
     return $q->result();
   }

@@ -16,6 +16,7 @@
                   <th>No.</th>
                   <th>Username</th>
                   <th>Nama</th>
+                  <th>Jenis</th>
                   <th>Action</th>
                 </tr>
               </thead>
@@ -29,6 +30,18 @@
                     <td><?= $i; ?></td>
                     <td><?= $item->username; ?></td>
                     <td><?= $item->nama; ?></td>
+                    <td>
+                      <?php
+                      switch($item->tiket){
+                        case 1: echo "Silver 1"; break;
+                        case 2: echo "Silver 2"; break;
+                        case 3: echo "Gold 1"; break;
+                        case 4: echo "Gold 2"; break;
+                        case 5: echo "Gold"; break;
+                        default: echo "Unknown"; break;
+                      }
+                      ?>
+                    </td>
                     <td class="text-center">
                       <?php if($item->konfirmasi == 1){ ?>
                         <a href="<?= base_url('foto/bukti/'. $item->bukti); ?>" rel="tooltip" title="Lihat bukti" class="btn btn-info btn-simple btn-xs" target="_blank">

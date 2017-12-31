@@ -96,11 +96,13 @@ class User_model extends CI_Model {
 
   public function updatePeserta($alamat_foto){
     $data = array(
-      'nis' => $this->input->post('nis'),
-      'sekolah' => $this->input->post('sekolah'),
+      'nis' => $this->purify($this->input->post('nis')),
+      'sekolah' => $this->purify($this->input->post('sekolah')),
+      'jurusan' => $this->input->post('jurusan'),
       'foto' => $alamat_foto,
-      // 'univ1' => $this->input->post('univ1'),
-      // 'univ2' => $this->input->post('univ2')
+      'pil1' => $this->input->post('prodi1'),
+      'pil2' => $this->input->post('prodi2') == 0 ? null : $this->input->post('prodi2'),
+      'pil2' => $this->input->post('prodi3') == 0 ? null : $this->input->post('prodi3')
     );
 
     $this->db->where('id_pendaftar', $this->session->userdata('id'));
@@ -125,9 +127,13 @@ class User_model extends CI_Model {
   }
 
   public function getPesertaById($id){
+    // select p.id_pendaftar, p.no_peserta, d.nama, p.nis, p.sekolah, p.foto, p.pil1, p.pil2, p.pil3 from peserta p join pendaftar d on p.id_pendaftar = d.id
     $q = $this->db->get_where('v_peserta', ['id_pendaftar' => $id]);
     return $q->row();
   }
 
-
+  public function getPTN(){
+    $q = $this->db->get('ptn');
+    return $q->result();
+  }
 }
