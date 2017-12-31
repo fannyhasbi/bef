@@ -216,14 +216,13 @@ class User extends CI_Controller {
     $this->cekLogin();
 
     if($this->input->post('simpan')){
-      var_dump($this->input->post());
-      die();
-
-      $nis  = $this->input->post('nis');
-      $sek  = $this->input->post('sekolah');
+      $nis = $this->input->post('nis');
+      $sek = $this->input->post('sekolah');
+      $jur = $this->input->post('jurusan');
+      $pro = $this->input->post('prodi1');
 
       // cuma memastikan kalo user usil pake js injection :(
-      if($nis!=null && $sek!=null){
+      if($nis!=null&&$sek!=null&&$jur!=null&&$pro!=null){
         $alamat_foto = $this->generateAlamatFoto();
 
         // jika alamat bukti udah ada di db

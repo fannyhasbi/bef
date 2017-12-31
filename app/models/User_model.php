@@ -96,11 +96,13 @@ class User_model extends CI_Model {
 
   public function updatePeserta($alamat_foto){
     $data = array(
-      'nis' => $this->input->post('nis'),
-      'sekolah' => $this->input->post('sekolah'),
+      'nis' => $this->purify($this->input->post('nis')),
+      'sekolah' => $this->purify($this->input->post('sekolah')),
+      'jurusan' => $this->input->post('jurusan'),
       'foto' => $alamat_foto,
-      // 'univ1' => $this->input->post('univ1'),
-      // 'univ2' => $this->input->post('univ2')
+      'pil1' => $this->input->post('prodi1'),
+      'pil2' => $this->input->post('prodi2') == 0 ? null : $this->input->post('prodi2'),
+      'pil2' => $this->input->post('prodi3') == 0 ? null : $this->input->post('prodi3')
     );
 
     $this->db->where('id_pendaftar', $this->session->userdata('id'));
