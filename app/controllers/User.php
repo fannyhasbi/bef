@@ -156,7 +156,7 @@ class User extends CI_Controller {
       $data['bio'] = $this->user_model->getUserById($this->session->userdata('id'));
       $data['message'] = $this->session->flashdata('msg');
       $data['type'] = $this->session->flashdata('type');
-      $this->load->view('user/initial', $data);
+      $this->load->view('user/biodata', $data);
     }
 
   }
