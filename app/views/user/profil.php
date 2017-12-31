@@ -56,18 +56,19 @@
               <div class="col-md-6">
                 <div class="form-group">
                   <label class="control-label">Pilihan Universitas 1</label>
-                  <select class="form-control" name="univ1">
-                    <option value="1">Universitas Diponegoro</option>
-                    <option value="2">Universitas Negeri Semarang</option>
+                  <select id="univ1" class="form-control" name="univ1" onchange="$(this).getProdi('1')">
+                    <option value="0">--- Pilih Universitas ---</option>
+                    <?php foreach($ptn as $item): ?>
+                      <option value="<?= $item->kode; ?>"><?= $item->nama; ?></option>
+                    <?php endforeach; ?>
                   </select>
                 </div>
               </div>
               <div class="col-md-6">
                 <div class="form-group">
                   <label class="control-label">Pilihan Prodi 1</label>
-                  <select class="form-control" name="prodi1">
-                    <option value="1">Teknik Sipil</option>
-                    <option value="2">Sastra Inggris</option>
+                  <select id="prodi1" class="form-control" name="prodi1" disabled>
+                    <option value="0">--- Pilih Prodi ---</option>
                   </select>
                 </div>
               </div>
@@ -77,16 +78,19 @@
               <div class="col-md-6">
                 <div class="form-group">
                   <label class="control-label">Pilihan Universitas 2</label>
-                  <select class="form-control" name="univ2">
-                    <option value="1">Universitas Diponegoro</option>
-                    <option value="2">Universitas Negeri Semarang</option>
+                  <select id="univ2" class="form-control" name="univ2" onchange="$(this).getProdi('2')">
+                    <option value="0">--- Pilih Universitas ---</option>
+                    <?php foreach($ptn as $item): ?>
+                      <option value="<?= $item->kode; ?>"><?= $item->nama; ?></option>
+                    <?php endforeach; ?>
                   </select>
                 </div>
               </div>
               <div class="col-md-6">
                 <div class="form-group">
                   <label class="control-label">Pilihan Prodi 1</label>
-                  <select class="form-control" name="prodi2">
+                  <select id="prodi2" class="form-control" name="prodi2" disabled>
+                    <option value="0">--- Pilih Prodi ---</option>
                     <option value="1">Teknik Sipil</option>
                     <option value="2">Sastra Inggris</option>
                   </select>
@@ -98,16 +102,19 @@
               <div class="col-md-6">
                 <div class="form-group">
                   <label class="control-label">Pilihan Universitas 3</label>
-                  <select class="form-control" name="univ3">
-                    <option value="1">Universitas Diponegoro</option>
-                    <option value="2">Universitas Negeri Semarang</option>
+                  <select id="univ3" class="form-control" name="univ3" onchange="$(this).getProdi('3')">
+                    <option value="0">--- Pilih Universitas ---</option>
+                    <?php foreach($ptn as $item): ?>
+                      <option value="<?= $item->kode; ?>"><?= $item->nama; ?></option>
+                    <?php endforeach; ?>
                   </select>
                 </div>
               </div>
               <div class="col-md-6">
                 <div class="form-group">
                   <label class="control-label">Pilihan Prodi 3</label>
-                  <select class="form-control" name="prodi3">
+                  <select id="prodi3" class="form-control" name="prodi3" disabled>
+                    <option value="0">--- Pilih Prodi ---</option>
                     <option value="1">Teknik Sipil</option>
                     <option value="2">Sastra Inggris</option>
                   </select>
@@ -124,3 +131,26 @@
     </div>
   </div>
 </div>
+
+<script>
+$(document).ready(function(){
+  $.fn.getProdi = function(no_form){
+    var ptn = $("#univ"+no_form).val();
+
+    $.ajax({
+      type: "post",
+      url: "<?= site_url('api/v1/prodi'); ?>",
+      dataType: "json",
+      data: {
+        "ptn": ptn,
+      },
+      success: function(res){
+        $("#prodi"+no_form).prop("disabled", false);
+        $("#prodi"+no_form).html(res.prodi);
+      }
+    });
+  }
+})
+
+
+</script>

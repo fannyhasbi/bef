@@ -129,4 +129,9 @@ class User_model extends CI_Model {
     $q = $this->db->get_where('v_peserta', ['id_pendaftar' => $id]);
     return $q->row();
   }
+
+  public function getPTN(){
+    $q = $this->db->get('ptn');
+    return $q->result();
+  }
 }

@@ -216,6 +216,9 @@ class User extends CI_Controller {
     $this->cekLogin();
 
     if($this->input->post('simpan')){
+      var_dump($this->input->post());
+      die();
+
       $nis  = $this->input->post('nis');
       $sek  = $this->input->post('sekolah');
 
@@ -264,9 +267,10 @@ class User extends CI_Controller {
       redirect(site_url('dashboard'));
     }
     else {
+      $data['ptn'] = $this->user_model->getPTN();
+
       $data['message'] = $this->session->flashdata('msg');
       $data['type'] = $this->session->flashdata('type');
-
       $data['view_name'] = 'profil';
       $this->load->view('user/index_view', $data);
     }
