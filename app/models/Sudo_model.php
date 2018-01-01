@@ -25,43 +25,12 @@ class Sudo_model extends CI_Model {
     return $this->db->get_where('sudo', $data);
   }
 
-  public function checkIdPendaftar($id){
-    return $this->db->get_where('pendaftar', ['id' => $id]);
-  }
-
   public function checkPTN($kode){
     return $this->db->get_where('ptn', ['kode' => $kode]);
   }
 
   public function checkProdi($kode){
     return $this->db->get_where('prodi', ['kode' => $kode]);
-  }
-
-  public function addConfirm($id_pendaftar){
-    $data = array(
-      'id_admin' => $this->session->userdata('id_sudo'),
-      'id_pendaftar' => $id_pendaftar,
-      'tgl' => date('Y-m-d H:i:s')
-    );
-
-    if($this->db->insert('konfirmasi', $data))
-      return true;
-    else
-      return false;
-  }
-
-  public function addPeserta($id_pendaftar, $no_peserta){
-    $data = array(
-      'no_peserta' => $no_peserta,
-      'id_pendaftar' => $id_pendaftar
-    );
-
-    if($this->db->insert('peserta', $data)){
-      return true;
-    }
-    else {
-      return false;
-    }
   }
 
   public function addAdmin(){
@@ -128,28 +97,6 @@ class Sudo_model extends CI_Model {
     $this->db->update('prodi', $data);
   }
 
-  public function deleteConfirm($id_pendaftar){
-    $this->db->where('id_pendaftar', $id_pendaftar);
-    if($this->db->delete('konfirmasi'))
-      return true;
-    else 
-      return false;
-  }
-
-  public function deletePeserta($id_pendaftar){
-    $this->db->where('id_pendaftar', $id_pendaftar);
-    if($this->db->delete('peserta'))
-      return true;
-    else 
-      return false;
-  }
-
-  public function deletePendaftar($id_pendaftar){
-    $this->db->where('id', $id_pendaftar);
-    // ga pake if lese wkwwk
-    $this->db->delete('pendaftar');
-  }
-
   public function deleteAdmin($id_admin){
     $this->db->where('id', $id_admin);
     if($this->db->delete('admin'))
@@ -188,11 +135,6 @@ class Sudo_model extends CI_Model {
     // SELECT id AS refId, username, nama, bukti, IF((SELECT COUNT(id) FROM konfirmasi WHERE id_pendaftar = refId) > 0, 1, 0) AS konfirmasi FROM pendaftar
     $q = $this->db->get("v_konfirmasi");
     return $q->result();
-  }
-
-  public function getLastPeserta(){
-    $q = $this->db->query("SELECT MAX(no_peserta) AS max FROM peserta ORDER BY no_peserta");
-    return $q->row();
   }
 
   public function getAdmin(){
