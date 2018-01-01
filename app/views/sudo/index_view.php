@@ -1,8 +1,4 @@
-<?php
-defined('BASEPATH') OR exit('No direct script access allowed');
-$load = $this->db->query("SELECT COUNT(id) AS total FROM pendaftar WHERE id NOT IN (SELECT id_pendaftar FROM konfirmasi)");
-$label = $load->row()->total;
-?>
+<?php defined('BASEPATH') OR exit('No direct script access allowed'); ?>
 <!doctype html>
 <html lang="en">
 <head>
@@ -57,12 +53,6 @@ $label = $load->row()->total;
           <a href="<?= site_url('sudo'); ?>">
             <i class="material-icons">dashboard</i>
             <p>Dashboard</p>
-          </a>
-        </li>
-        <li <?= uri_string() == 'sudo/konfirmasi' ? 'class="active"' : ''; ?>>
-          <a href="<?= site_url('sudo/konfirmasi'); ?>">
-            <i class="material-icons">check_circle</i>
-            <p>Konfirmasi &nbsp; <span class="label <?= $label==0 ? 'label-success' : 'label-danger' ?>"><?= $label; ?></span></p>
           </a>
         </li>
         <li <?= uri_string() == 'sudo/ganti_password' ? 'class="active"' : ''; ?>>

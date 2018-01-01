@@ -42,6 +42,17 @@
                 </div>
               </div>
             </div>
+            <div class="row">
+              <div class="col-md-12">
+                <div class="form-group">
+                  <label class="control-label">Jenis</label>
+                  <select class="form-control" name="jenis">
+                    <option value="1"<?php if($prodi->jenis == 1){echo ' selected';} ?>>SAINTEK</option>
+                    <option value="2"<?php if($prodi->jenis == 2){echo ' selected';} ?>>SOSHUM</option>
+                  </select>
+                </div>
+              </div>
+            </div>
 
             <input type="submit" class="btn btn-success pull-left" name="tambah" value="Tambah">
             <div class="clearfix"></div>

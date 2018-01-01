@@ -83,66 +83,6 @@ class Sudo extends CI_Controller {
     }
   }
 
-  public function confirm($id_pendaftar){
-    $this->cekLogin();
-
-    if($this->sudo_model->checkIdPendaftar($id_pendaftar)->num_rows() > 0){
-      if($this->sudo_model->addConfirm($id_pendaftar)){
-        $last_peserta = $this->sudo_model->getLastPeserta();
-        $no_peserta = $last_peserta->max + 1;
-
-        if($this->sudo_model->addPeserta($id_pendaftar, $no_peserta)){
-          $this->session->set_flashdata('msg', 'Berhasil mengkonfirmasi.');
-          $this->session->set_flashdata('type', 'success');
-        }
-        else {
-          $this->session->set_flashdata('msg', 'Terjadi kesalahan, gagal mengkonfirmasi.');
-          $this->session->set_flashdata('type', 'danger');
-        }
-      }
-      else {
-        $this->session->set_flashdata('msg', 'Terjadi kesalahan, gagal mengkonfirmasi.');
-        $this->session->set_flashdata('type', 'danger');
-      }
-    }
-
-    redirect(site_url('sudo/konfirmasi'));
-  }
-
-  // In memoriam
-  // Akan konyol jika sudah dikonfirmasi tapi dibatalkan :(
-  // Gunakan jika perlu
-  // public function cancel($id_pendaftar){
-  //   $this->cekLogin();
-
-  //   if($this->sudo_model->checkIdPendaftar($id_pendaftar)->num_rows() > 0){
-  //     if($this->sudo_model->deleteConfirm($id_pendaftar)){
-  //       // I dunno what is this, I don't use if else again wkwkwk :v
-  //       $this->sudo_model->deletePeserta($id_pendaftar);
-  //       $this->session->set_flashdata('msg', 'Konfirmasi berhasil dibatalkan.');
-  //       $this->session->set_flashdata('type', 'success');
-  //     }
-  //     else {
-  //       $this->session->set_flashdata('msg', 'Terjadi kesalahan, gagal mengkonfirmasi.');
-  //       $this->session->set_flashdata('type', 'danger');
-  //     }
-  //   }
-
-  //   redirect(site_url('sudo/konfirmasi'));
-  // }
-
-  public function konfirmasi(){
-    $this->cekLogin();
-
-    $data['bukti'] = $this->sudo_model->getBukti();
-    
-    $data['message'] = $this->session->flashdata('msg');
-    $data['type'] = $this->session->flashdata('type');
-
-    $data['view_name'] = 'konfirmasi';
-    $this->load->view('sudo/index_view', $data);
-  }
-
   public function ganti_pass(){
     $this->cekLogin();
 
@@ -181,16 +121,24 @@ class Sudo extends CI_Controller {
     $this->cekLogin();
 
     if($this->input->post('tambah')){
-      if($this->sudo_model->addAdmin()){
-        $this->session->set_flashdata('msg', 'Berhasil menambahkan admin.');
-        $this->session->set_flashdata('type', 'success');
+      if($this->sudo_model->checkAdminUsername($this->input->post('username'))->num_rows() > 0){
+        $this->session->set_flashdata('msg', 'Username sudah pernah terdaftar.');
+        $this->session->set_flashdata('type', 'warning');
+
+        redirect(site_url('sudo/add-admin'));
       }
       else {
-        $this->session->set_flashdata('msg', 'Terjadi kesalahan, gagal menambahkan admin.');
-        $this->session->set_flashdata('type', 'danger');
-      }
+        if($this->sudo_model->addAdmin()){
+          $this->session->set_flashdata('msg', 'Berhasil menambahkan admin.');
+          $this->session->set_flashdata('type', 'success');
+        }
+        else {
+          $this->session->set_flashdata('msg', 'Terjadi kesalahan, gagal menambahkan admin.');
+          $this->session->set_flashdata('type', 'danger');
+        }
 
-      redirect(site_url('sudo/admin'));
+        redirect(site_url('sudo/admin'));
+      }
     }
     else {
       $data['message'] = $this->session->flashdata('msg');
@@ -217,26 +165,6 @@ class Sudo extends CI_Controller {
     redirect(site_url('sudo/admin'));
   }
 
-  public function del_peserta($id_pendaftar){
-    $this->cekLogin();
-
-    if($this->sudo_model->checkIdPendaftar($id_pendaftar)->num_rows() > 0){
-      if($this->sudo_model->deleteConfirm($id_pendaftar)){
-        // I dunno what is this, I don't use if else again wkwkwk :v
-        $this->sudo_model->deletePeserta($id_pendaftar);
-        $this->sudo_model->deletePendaftar($id_pendaftar);
-        $this->session->set_flashdata('msg', 'Peserta berhasil dihapus.');
-        $this->session->set_flashdata('type', 'success');
-      }
-      else {
-        $this->session->set_flashdata('msg', 'Terjadi kesalahan, gagal menghapus.');
-        $this->session->set_flashdata('type', 'danger');
-      }
-    }
-
-    redirect(site_url('sudo/konfirmasi'));
-  }
-
   public function ptn(){
     $this->cekLogin();
 
@@ -252,16 +180,24 @@ class Sudo extends CI_Controller {
     $this->cekLogin();
 
     if($this->input->post('tambah')){
-      if($this->sudo_model->addPTN()){
-        $this->session->set_flashdata('msg', 'Berhasil menambahkan PTN.');
-        $this->session->set_flashdata('type', 'success');
+      if($this->sudo_model->checkPTN($this->input->post('kode'))->num_rows() > 0){
+        $this->session->set_flashdata('msg', 'Kode PTN sudah pernah didaftarkan');
+        $this->session->set_flashdata('type', 'warning');
+
+        redirect(site_url('sudo/add-ptn'));
       }
       else {
-        $this->session->set_flashdata('msg', 'Terjadi kesalahan, gagal menambahkan PTN.');
-        $this->session->set_flashdata('type', 'danger');
-      }
+        if($this->sudo_model->addPTN()){
+          $this->session->set_flashdata('msg', 'Berhasil menambahkan PTN.');
+          $this->session->set_flashdata('type', 'success');
+        }
+        else {
+          $this->session->set_flashdata('msg', 'Terjadi kesalahan, gagal menambahkan PTN.');
+          $this->session->set_flashdata('type', 'danger');
+        }
 
-      redirect(site_url('sudo/add-ptn'));
+        redirect(site_url('sudo/add-ptn'));
+      }
     }
     else {
       $data['message'] = $this->session->flashdata('msg');
@@ -325,16 +261,24 @@ class Sudo extends CI_Controller {
     $this->cekLogin();
 
     if($this->input->post('tambah')){
-      if($this->sudo_model->addProdi()){
-        $this->session->set_flashdata('msg', 'Berhasil menambahkan prodi.');
-        $this->session->set_flashdata('type', 'success');
+      if($this->sudo_model->checkProdi($this->input->post('kode'))->num_rows() > 0){
+        $this->session->set_flashdata('msg', 'Kode prodi sudah pernah didaftarkan.');
+        $this->session->set_flashdata('type', 'warning');
+
+        redirect(site_url('sudo/add-prodi'));
       }
       else {
-        $this->session->set_flashdata('msg', 'Terjadi kesalahan, gagal menambahkan prodi.');
-        $this->session->set_flashdata('type', 'danger');
-      }
+        if($this->sudo_model->addProdi()){
+          $this->session->set_flashdata('msg', 'Berhasil menambahkan prodi.');
+          $this->session->set_flashdata('type', 'success');
+        }
+        else {
+          $this->session->set_flashdata('msg', 'Terjadi kesalahan, gagal menambahkan prodi.');
+          $this->session->set_flashdata('type', 'danger');
+        }
 
-      redirect(site_url('sudo/add-prodi'));
+        redirect(site_url('sudo/add-prodi'));
+      }
     }
     else {
       $data['ptn'] = $this->sudo_model->getPTN();
