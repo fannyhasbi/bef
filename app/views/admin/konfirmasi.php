@@ -26,7 +26,7 @@
                 $i = 1;
                 foreach($bukti as $item):
                 ?>
-                  <tr>
+                  <tr<?php if($item->konfirmasi==1){echo ' style="color:#fff;background-color:#5cb85c"';}?>>
                     <td><?= $i; ?></td>
                     <td><?= $item->username; ?></td>
                     <td><?= $item->nama; ?></td>
@@ -44,9 +44,7 @@
                     </td>
                     <td class="text-center">
                       <?php if($item->konfirmasi == 1){ ?>
-                        <a href="<?= base_url('foto/bukti/'. $item->bukti); ?>" rel="tooltip" title="Lihat bukti" class="btn btn-info btn-simple btn-xs" target="_blank">
-                          <i class="material-icons">search</i> Lihat
-                        </a>
+                        
                       <?php } else { ?>
                         <?php if($item->bukti != null){ ?>
                           <a href="<?= base_url('foto/bukti/'. $item->bukti); ?>" rel="tooltip" title="Lihat bukti" class="btn btn-info btn-simple btn-xs" target="_blank">

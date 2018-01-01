@@ -55,7 +55,7 @@ class Admin extends CI_Controller {
         $this->session->set_flashdata('msg', '<div class="alert alert-danger">Username atau password salah</div>');
       }
 
-      redirect(site_url('masuk'));
+      redirect(site_url('me/login'));
     }
     else {
       $data['message'] = $this->session->flashdata('msg');

@@ -12,6 +12,7 @@ $route['profil'] = 'user/profil';
 $route['ganti_password'] = 'user/ganti_pass';
 
 // Admin
+$route['admin'] = 'home/notfound';
 $route['me'] = 'admin';
 $route['me/login'] = 'admin/login';
 $route['me/ganti_password'] = 'admin/ganti_pass';
