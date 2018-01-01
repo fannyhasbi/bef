@@ -180,16 +180,24 @@ class Sudo extends CI_Controller {
     $this->cekLogin();
 
     if($this->input->post('tambah')){
-      if($this->sudo_model->addPTN()){
-        $this->session->set_flashdata('msg', 'Berhasil menambahkan PTN.');
-        $this->session->set_flashdata('type', 'success');
+      if($this->sudo_model->checkPTN($this->input->post('kode'))->num_rows() > 0){
+        $this->session->set_flashdata('msg', 'Kode PTN sudah pernah didaftarkan');
+        $this->session->set_flashdata('type', 'warning');
+
+        redirect(site_url('sudo/add-ptn'));
       }
       else {
-        $this->session->set_flashdata('msg', 'Terjadi kesalahan, gagal menambahkan PTN.');
-        $this->session->set_flashdata('type', 'danger');
-      }
+        if($this->sudo_model->addPTN()){
+          $this->session->set_flashdata('msg', 'Berhasil menambahkan PTN.');
+          $this->session->set_flashdata('type', 'success');
+        }
+        else {
+          $this->session->set_flashdata('msg', 'Terjadi kesalahan, gagal menambahkan PTN.');
+          $this->session->set_flashdata('type', 'danger');
+        }
 
-      redirect(site_url('sudo/add-ptn'));
+        redirect(site_url('sudo/add-ptn'));
+      }
     }
     else {
       $data['message'] = $this->session->flashdata('msg');
@@ -253,16 +261,24 @@ class Sudo extends CI_Controller {
     $this->cekLogin();
 
     if($this->input->post('tambah')){
-      if($this->sudo_model->addProdi()){
-        $this->session->set_flashdata('msg', 'Berhasil menambahkan prodi.');
-        $this->session->set_flashdata('type', 'success');
+      if($this->sudo_model->checkProdi($this->input->post('kode'))->num_rows() > 0){
+        $this->session->set_flashdata('msg', 'Kode prodi sudah pernah didaftarkan.');
+        $this->session->set_flashdata('type', 'warning');
+
+        redirect(site_url('sudo/add-prodi'));
       }
       else {
-        $this->session->set_flashdata('msg', 'Terjadi kesalahan, gagal menambahkan prodi.');
-        $this->session->set_flashdata('type', 'danger');
-      }
+        if($this->sudo_model->addProdi()){
+          $this->session->set_flashdata('msg', 'Berhasil menambahkan prodi.');
+          $this->session->set_flashdata('type', 'success');
+        }
+        else {
+          $this->session->set_flashdata('msg', 'Terjadi kesalahan, gagal menambahkan prodi.');
+          $this->session->set_flashdata('type', 'danger');
+        }
 
-      redirect(site_url('sudo/add-prodi'));
+        redirect(site_url('sudo/add-prodi'));
+      }
     }
     else {
       $data['ptn'] = $this->sudo_model->getPTN();
