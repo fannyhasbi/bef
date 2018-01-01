@@ -33,12 +33,14 @@
                     <td>
                       <?php
                       switch($item->tiket){
-                        case 1: echo "Silver 1"; break;
-                        case 2: echo "Silver 2"; break;
-                        case 3: echo "Gold 1"; break;
-                        case 4: echo "Gold 2"; break;
-                        case 5: echo "Gold"; break;
-                        default: echo "Unknown"; break;
+                        case '1': echo 'Silver IPA'; break;
+                        case '2': echo 'Silver IPS'; break;
+                        case '3': echo 'Silver IPC'; break;
+                        case '4': echo 'Gold IPA'; break;
+                        case '5': echo 'Gold IPS'; break;
+                        case '6': echo 'Gold IPC'; break;
+                        // case '7': echo 'Gold';
+                        default: echo 'Unknown'; break;
                       }
                       ?>
                     </td>

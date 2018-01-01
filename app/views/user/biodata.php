@@ -103,7 +103,7 @@
               <div class="card-content">
                 
                 <!-- Form ubah profil -->
-                <form id="bio" action="<?= site_url('save'); ?>" method="post" onsubmit="return confirm('Pastikan seluruh data terisi dengan benar');">
+                <form id="bio" action="<?= site_url('save'); ?>" method="post" onsubmit="return confirm('Jika yakin semua data sudah benar, maka klik OK');">
                   <div class="row">
                     <div class="col-md-12">
                       <div class="form-group label-floating">
@@ -167,10 +167,12 @@
                         <label class="control-label">Pilihan Tiket</label>
                         <select class="form-control" name="tiket">
                           <option value="1">Silver IPA/IPS</option>
-                          <option value="2">Silver IPC</option>
-                          <option value="3">Gold IPA/IPS</option>
-                          <option value="4">Gold IPC</option>
-                          <option value="5">Gold</option>
+                          <option value="2">Silver IPS</option>
+                          <option value="3">Silver IPC</option>
+                          <option value="4">Gold IPA</option>
+                          <option value="5">Gold IPS</option>
+                          <option value="6">Gold IPC</option>
+                          <!-- <option value="7">Gold</option> -->
                         </select>
                       </div>
                     </div>
