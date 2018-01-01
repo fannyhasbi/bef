@@ -25,6 +25,10 @@ class Sudo_model extends CI_Model {
     return $this->db->get_where('sudo', $data);
   }
 
+  public function checkAdminUsername($username){
+    return $this->db->get_where('admin', ['username' => $username]);
+  }
+
   public function checkPTN($kode){
     return $this->db->get_where('ptn', ['kode' => $kode]);
   }

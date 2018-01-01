@@ -16,7 +16,7 @@
               <div class="col-md-6">
                 <div class="form-group label-floating">
                   <label class="control-label">Username</label>
-                  <input type="text" class="form-control" name="username" required>
+                  <input type="text" class="form-control" name="username" required autofocus>
                 </div>
               </div>
               <div class="col-md-6">
@@ -31,18 +31,18 @@
               <div class="col-md-6">
                 <div class="form-group label-floating">
                   <label class="control-label">Password</label>
-                  <input type="password" class="form-control" name="password" required>
+                  <input type="password" id="password" class="form-control" name="password" required>
                 </div>
               </div>
               <div class="col-md-6">
                 <div class="form-group label-floating">
                   <label class="control-label">Ulangi password</label>
-                  <input type="password" class="form-control" name="password2" required>
+                  <input type="password" id="password2" class="form-control" name="password2" required>
                 </div>
               </div>
             </div>
 
-            <input type="submit" class="btn btn-success pull-right" name="tambah" value="Tambah">
+            <input type="submit" id="btn" class="btn btn-success pull-right" name="tambah" value="Tambah">
             <div class="clearfix"></div>
 
           </form>

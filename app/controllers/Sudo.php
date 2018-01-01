@@ -121,16 +121,24 @@ class Sudo extends CI_Controller {
     $this->cekLogin();
 
     if($this->input->post('tambah')){
-      if($this->sudo_model->addAdmin()){
-        $this->session->set_flashdata('msg', 'Berhasil menambahkan admin.');
-        $this->session->set_flashdata('type', 'success');
+      if($this->sudo_model->checkAdminUsername($this->input->post('username'))->num_rows() > 0){
+        $this->session->set_flashdata('msg', 'Username sudah pernah terdaftar.');
+        $this->session->set_flashdata('type', 'warning');
+
+        redirect(site_url('sudo/add-admin'));
       }
       else {
-        $this->session->set_flashdata('msg', 'Terjadi kesalahan, gagal menambahkan admin.');
-        $this->session->set_flashdata('type', 'danger');
-      }
+        if($this->sudo_model->addAdmin()){
+          $this->session->set_flashdata('msg', 'Berhasil menambahkan admin.');
+          $this->session->set_flashdata('type', 'success');
+        }
+        else {
+          $this->session->set_flashdata('msg', 'Terjadi kesalahan, gagal menambahkan admin.');
+          $this->session->set_flashdata('type', 'danger');
+        }
 
-      redirect(site_url('sudo/admin'));
+        redirect(site_url('sudo/admin'));
+      }
     }
     else {
       $data['message'] = $this->session->flashdata('msg');
