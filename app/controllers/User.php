@@ -16,7 +16,28 @@ class User extends CI_Controller {
     else {
       $konfirmasi = $this->user_model->checkConfirm($this->session->userdata('id'));
       if($konfirmasi->num_rows() > 0) {
-        $this->profil();
+        $foto = $this->user_model->getFotoById($this->session->userdata('id'));
+        if($foto->foto != null){
+          if($this->user_model->getFinalisasi()->final == 0){
+            $data['profil'] = $this->user_model->getFinal();
+
+            $data['view_name'] = 'finalisasi';
+            $data['message'] = $this->session->flashdata('msg');
+            $data['type'] = $this->session->flashdata('type');
+            $this->load->view('user/index_view', $data);
+          }
+          else {
+            $data['profil'] = $this->user_model->getFinal();
+
+            $data['view_name'] = 'review';
+            $data['message'] = $this->session->flashdata('msg');
+            $data['type'] = $this->session->flashdata('type');
+            $this->load->view('user/index_view', $data);
+          }
+        }
+        else {
+          $this->profil();
+        }
       }
       else {
         $this->pay();
@@ -296,6 +317,17 @@ class User extends CI_Controller {
       $data['view_name'] = 'ganti_password';
       $this->load->view('user/index_view', $data);
     }
+  }
+
+  public function finalisasi(){
+    $this->cekLogin();
+
+    $this->user_model->updateFinal();
+
+    $this->session->set_flashdata('msg', 'Berhasil finalisasi. Silahkan lanjut mencetak kartu');
+    $this->session->set_flashdata('type', 'success');
+
+    redirect(site_url('dashboard'));
   }
 
 }

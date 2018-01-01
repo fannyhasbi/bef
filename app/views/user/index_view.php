@@ -55,12 +55,6 @@
             <p>Ubah Password</p>
           </a>
         </li>
-        <li <?= uri_string() == 'cetak' ? 'class="active"' : ''; ?>>
-          <a href="<?= site_url('cetak'); ?>">
-            <i class="material-icons">print</i>
-            <p>Cetak Kartu</p>
-          </a>
-        </li>
         <li>
           <a href="<?= site_url('keluar'); ?>">
             <i class="material-icons">exit_to_app</i>

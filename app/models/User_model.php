@@ -112,6 +112,11 @@ class User_model extends CI_Model {
       return false;
   }
 
+  public function updateFinal(){
+    $this->db->where('id_pendaftar', $this->session->userdata('id'));
+    $this->db->update('peserta', ['final' => 1]);
+  }
+
   public function getUserByUsername(){
     $data = array(
       'username' => $this->purify($this->input->post('username'))
@@ -136,4 +141,57 @@ class User_model extends CI_Model {
     $q = $this->db->get('ptn');
     return $q->result();
   }
+
+  public function getFotoById($id_pendaftar){
+    $q = $this->db->get_where('peserta', ['id_pendaftar' => $id_pendaftar]);
+    return $q->row();
+  }
+
+  public function getFinal(){
+    /* *****
+    SELECT p.id_pendaftar,
+      p.no_peserta,
+      d.nama,
+      CONCAT(d.alamat, ', ', d.kodepos) AS alamat,
+      d.telp,
+      d.ttl,
+      d.gender,
+      d.tiket,
+      p.nis,
+      p.sekolah,
+      p.jurusan,
+      p.foto,
+      CONCAT(u1.nama, ' - ', r1.nama) AS prodi1,
+      CONCAT(u2.nama, ' - ', r2.nama) AS prodi2,
+      CONCAT(u3.nama, ' - ', r3.nama) AS prodi3
+    FROM peserta p
+    INNER JOIN pendaftar d
+      ON p.id_pendaftar = d.id
+
+    LEFT JOIn prodi r1
+      ON p.pil1 = r1.kode
+    LEFT JOIN ptn u1
+      ON r1.ptn = u1.kode
+
+    LEFT JOIN prodi r2
+      ON p.pil2 = r2.kode
+    LEFT JOIN ptn u2
+      ON r2.ptn = u2.kode
+
+    LEFt JOIN prodi r3
+      ON p.pil3 = r3.kode
+    LEFT JOIN ptn u3
+      ON r3.ptn = u3.kode
+
+      ****** */
+
+    $q = $this->db->get_where('v_final', ['id_pendaftar' => $this->session->userdata('id')]);
+    return $q->row();
+  }
+
+  public function getFinalisasi(){
+    $q = $this->db->get_where('peserta', ['id_pendaftar' => $this->session->userdata('id')]);
+    return $q->row();
+  }
+
 }

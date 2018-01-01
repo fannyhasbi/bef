@@ -10,6 +10,7 @@ $route['save'] = 'user/save';
 $route['pay'] = 'user/pay';
 $route['profil'] = 'user/profil';
 $route['ganti_password'] = 'user/ganti_pass';
+$route['final'] = 'user/finalisasi';
 
 // Admin
 $route['admin'] = 'home/notfound';
