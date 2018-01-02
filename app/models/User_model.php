@@ -85,6 +85,33 @@ class User_model extends CI_Model {
       return false;
   }
 
+  public function addIpa($no_peserta){
+    $this->db->insert('p_ipa', ['no_peserta' => $no_peserta]);
+  }
+
+  public function addIps($no_peserta){
+    $this->db->insert('p_ips', ['no_peserta' => $no_peserta]);
+  }
+
+  public function addIpc($no_peserta){
+    $this->db->insert('p_ipc', ['no_peserta' => $no_peserta]);
+  }
+
+  public function addPesertaFix($id_pendaftar, $no_peserta){
+    $data = array(
+      'no_peserta' => $no_peserta,
+      'id_pendaftar' => $id_pendaftar,
+      'qr' => 'wait.png'
+    );
+
+    if($this->db->insert('peserta_fix', $data)){
+      return true;
+    }
+    else {
+      return false;
+    }
+  }
+
   public function updatePass($new){
     $new = password_hash($new, PASSWORD_BCRYPT);
     $this->db->where('id', $this->session->userdata('id'));
@@ -95,21 +122,20 @@ class User_model extends CI_Model {
   }
 
   public function updatePeserta($alamat_foto){
+
+    $sql = "UPDATE peserta SET nis = ?, sekolah = ?, jurusan = ?, foto = ?, pil1 = ?, pil2 = ?, pil3 = ? WHERE id_pendaftar = ".$this->session->userdata('id');
+    
     $data = array(
-      'nis' => $this->purify($this->input->post('nis')),
-      'sekolah' => $this->purify($this->input->post('sekolah')),
-      'jurusan' => $this->input->post('jurusan'),
-      'foto' => $alamat_foto,
-      'pil1' => $this->input->post('prodi1'),
-      'pil2' => $this->input->post('prodi2') == 0 ? null : $this->input->post('prodi2'),
-      'pil2' => $this->input->post('prodi3') == 0 ? null : $this->input->post('prodi3')
+      $this->purify($this->input->post('nis')),
+      $this->purify($this->input->post('sekolah')),
+      $this->input->post('jurusan'),
+      $alamat_foto,
+      $this->input->post('prodi1'),
+      $this->input->post('prodi2'),
+      $this->input->post('prodi3')
     );
 
-    $this->db->where('id_pendaftar', $this->session->userdata('id'));
-    if($this->db->update('peserta', $data))
-      return true;
-    else
-      return false;
+    return $this->db->query($sql, $data);
   }
 
   public function updateFinal(){
@@ -186,6 +212,27 @@ class User_model extends CI_Model {
       ****** */
 
     $q = $this->db->get_where('v_final', ['id_pendaftar' => $this->session->userdata('id')]);
+    return $q->row();
+  }
+
+  public function getTiket($id_pendaftar){
+    $this->db->select('tiket');
+    $q = $this->db->get_where('pendaftar', ['id' => $id_pendaftar]);
+    return $q->row();
+  }
+
+  public function getLastIpa(){
+    $q = $this->db->query("SELECT * FROM p_ipa ORDER BY no_peserta DESC LIMIT 0,1");
+    return $q->row();
+  }
+
+  public function getLastIps(){
+    $q = $this->db->query("SELECT * FROM p_ips ORDER BY no_peserta DESC LIMIT 0,1");
+    return $q->row();
+  }
+
+  public function getLastIpc(){
+    $q = $this->db->query("SELECT * FROM p_ipc ORDER BY no_peserta DESC LIMIT 0,1");
     return $q->row();
   }
 

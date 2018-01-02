@@ -268,7 +268,7 @@ class User extends CI_Controller {
           $data_upload = $this->upload->data();
 
           if($this->user_model->updatePeserta($data_upload['file_name'])){
-            $this->session->set_flashdata('msg', 'Berhasil menyimpan, silahkan lanjutkan mencetak.');
+            $this->session->set_flashdata('msg', 'Berhasil menyimpan, silahkan finalisasi.');
             $this->session->set_flashdata('type', 'success');
           }
           else {
@@ -322,7 +322,44 @@ class User extends CI_Controller {
   public function finalisasi(){
     $this->cekLogin();
 
+    $tiket = $this->user_model->getTiket($this->session->userdata('id'));
+
+    if($tiket->tiket == 1 || $tiket->tiket == 4){
+      // Tambah peserta IPA
+      $no_peserta = $this->user_model->getLastIpa();
+      if($no_peserta == null)
+        $no_peserta = 1318010001;
+      else
+        $no_peserta = $no_peserta->no_peserta + 1;
+      
+      $this->user_model->addIpa($no_peserta);
+
+    }
+    else if($tiket->tiket == 2 || $tiket->tiket == 5){
+      // tambah peserta IPS
+      $no_peserta = $this->user_model->getLastIps()->no_peserta;
+      if($no_peserta == null)
+        $no_peserta = 1318020001;
+      else
+        $no_peserta = $no_peserta->no_peserta + 1;
+
+      $this->user_model->addIps($no_peserta);
+
+    }
+    else {
+      // tambah peserta IPC
+      $no_peserta = $this->user_model->getLastIpc()->no_peserta;
+      if($no_peserta == null)
+        $no_peserta = 1318030001;
+      else
+        $no_peserta = $no_peserta->no_peserta + 1;
+
+      $this->user_model->addIpc($no_peserta);
+
+    }
+
     $this->user_model->updateFinal();
+    $this->user_model->addPesertaFix($this->session->userdata('id'), $no_peserta);
 
     $this->session->set_flashdata('msg', 'Berhasil finalisasi. Silahkan lanjut mencetak kartu');
     $this->session->set_flashdata('type', 'success');

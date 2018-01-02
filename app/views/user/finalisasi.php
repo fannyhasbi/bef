@@ -1,11 +1,14 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed'); ?>
+<?php
+$q = $this->db->get_where('peserta_fix', ['id_pendaftar' => $this->session->userdata('id')])
+?>
 <div class="container-fluid">
   <div class="row">
     <div class="col-md-12">
       <div class="card">
-        <div class="card-header" data-background-color="purple">
-          <h4 class="title">Lengkapi Pilihan Program Studi</h4>
-          <p class="category">Silahkan lengkapi data-data dibawah ini.</p>
+        <div class="card-header" data-background-color="green">
+          <h4 class="title">Finalisasi</h4>
+          <p class="category">Silahkan cek kembali data dibawah ini. Jika terdapat kesalahan, silahkan hubungi CP</p>
         </div>
         <div class="card-content">
           <div class="row">
@@ -18,7 +21,7 @@
           <table class="table table-striped">
             <tr>
               <th>No. Peserta</th>
-              <td><?= $profil->no_peserta; ?></td>
+              <td><?= $q->num_rows() >  0 ? $this->db->get_where('peserta_fix', ['id_pendaftar'=>$this->session->userdata('id')])->row()->no_peserta : 'No. Peserta didapat setelah finalisasi' ?></td>
             </tr>
             <tr>
               <th>Nama Lengkap</th>
