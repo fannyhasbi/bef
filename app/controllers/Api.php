@@ -16,7 +16,7 @@ class Api extends CI_Controller {
 
     $prodi = $this->api_model->getProdiByKode($kode_ptn);
 
-    $out = "";
+    $out = '<option value="0">--- Pilih Prodi ---</option>';
     foreach($prodi as $item){
       $out .= '<option value="'. $item->kode .'">'. $item->nama ."</option>";
     }

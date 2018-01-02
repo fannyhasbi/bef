@@ -42,9 +42,8 @@ class Admin_model extends CI_Model {
       return false;
   }
 
-  public function addPeserta($id_pendaftar, $no_peserta){
+  public function addPeserta($id_pendaftar){
     $data = array(
-      'no_peserta' => $no_peserta,
       'id_pendaftar' => $id_pendaftar
     );
 
@@ -54,18 +53,6 @@ class Admin_model extends CI_Model {
     else {
       return false;
     }
-  }
-
-  public function addIpa($no_peserta){
-    $this->db->insert('p_ipa', ['no_peserta' => $no_peserta]);
-  }
-
-  public function addIps($no_peserta){
-    $this->db->insert('p_ips', ['no_peserta' => $no_peserta]);
-  }
-
-  public function addIpc($no_peserta){
-    $this->db->insert('p_ipc', ['no_peserta' => $no_peserta]);
   }
 
   public function updatePass($new){

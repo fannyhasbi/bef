@@ -68,44 +68,7 @@ class Admin extends CI_Controller {
 
     if($this->admin_model->checkIdPendaftar($id_pendaftar)->num_rows() > 0){
       if($this->admin_model->addConfirm($id_pendaftar)){
-        $tiket = $this->admin_model->getTiket($id_pendaftar);
-
-        if($tiket->tiket == 1 || $tiket->tiket == 4){
-          // Tambah peserta IPA
-          $no_peserta = $this->admin_model->getLastIpa();
-          if($no_peserta == null)
-            $no_peserta = 1318010001;
-          else
-            $no_peserta = $no_peserta->no_peserta + 1;
-          
-          $this->admin_model->addIpa($no_peserta);
-
-        }
-        else if($tiket->tiket == 2 || $tiket->tiket == 5){
-          // tambah peserta IPS
-          $no_peserta = $this->admin_model->getLastIps()->no_peserta;
-          if($no_peserta == null)
-            $no_peserta = 1318020001;
-          else
-            $no_peserta = $no_peserta->no_peserta + 1;
-
-          $this->admin_model->addIps($no_peserta);
-
-        }
-        else {
-          // tambah peserta IPC
-          $no_peserta = $this->admin_model->getLastIpc()->no_peserta;
-          if($no_peserta == null)
-            $no_peserta = 1318030001;
-          else
-            $no_peserta = $no_peserta->no_peserta + 1;
-
-          $this->admin_model->addIpc($no_peserta);
-
-        }
-
-
-        if($this->admin_model->addPeserta($id_pendaftar, $no_peserta)){
+        if($this->admin_model->addPeserta($id_pendaftar)){
           $this->session->set_flashdata('msg', 'Berhasil mengkonfirmasi.');
           $this->session->set_flashdata('type', 'success');
         }

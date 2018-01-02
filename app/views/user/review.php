@@ -18,7 +18,17 @@
           <table class="table table-striped">
             <tr>
               <th>No. Peserta</th>
-              <td><?= $profil->no_peserta; ?></td>
+              <td>
+                <?php
+                  $q = $this->db->get_where("peserta_fix", ['id_pendaftar' => $this->session->userdata('id')]);
+                  $q = $q->row()->no_peserta;
+                  $n1 = substr($q, 0, 4);
+                  $n2 = substr($q, 4, 2);
+                  $n3 = substr($q, 6, 4);
+
+                  echo $n1.'-'.$n2.'-'.$n3;
+                ?>
+              </td>
             </tr>
             <tr>
               <th>Nama Lengkap</th>
