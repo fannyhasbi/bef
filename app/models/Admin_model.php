@@ -56,6 +56,18 @@ class Admin_model extends CI_Model {
     }
   }
 
+  public function addIpa($no_peserta){
+    $this->db->insert('p_ipa', ['no_peserta' => $no_peserta]);
+  }
+
+  public function addIps($no_peserta){
+    $this->db->insert('p_ips', ['no_peserta' => $no_peserta]);
+  }
+
+  public function addIpc($no_peserta){
+    $this->db->insert('p_ipc', ['no_peserta' => $no_peserta]);
+  }
+
   public function updatePass($new){
     $new = password_hash($new, PASSWORD_BCRYPT);
     $this->db->where('id', $this->session->userdata('id_admin'));
@@ -128,5 +140,25 @@ class Admin_model extends CI_Model {
     return $pendaftar->row()->jumlah > $peserta->row()->jumlah ? $pendaftar->row()->jumlah : $peserta->row()->jumlah;
   }
 
+  public function getLastIpa(){
+    $q = $this->db->query("SELECT * FROM p_ipa ORDER BY no_peserta DESC LIMIT 0,1");
+    return $q->row();
+  }
+
+  public function getLastIps(){
+    $q = $this->db->query("SELECT * FROM p_ips ORDER BY no_peserta DESC LIMIT 0,1");
+    return $q->row();
+  }
+
+  public function getLastIpc(){
+    $q = $this->db->query("SELECT * FROM p_ipc ORDER BY no_peserta DESC LIMIT 0,1");
+    return $q->row();
+  }
+
+  public function getTiket($id_pendaftar){
+    $this->db->select('tiket');
+    $q = $this->db->get_where('pendaftar', ['id' => $id_pendaftar]);
+    return $q->row();
+  }
 
 }

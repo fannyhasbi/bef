@@ -166,7 +166,7 @@
                       <div class="form-group">
                         <label class="control-label">Pilihan Tiket</label>
                         <select class="form-control" name="tiket">
-                          <option value="1">Silver IPA/IPS</option>
+                          <option value="1">Silver IPA</option>
                           <option value="2">Silver IPS</option>
                           <option value="3">Silver IPC</option>
                           <option value="4">Gold IPA</option>
