@@ -167,7 +167,7 @@ class Admin extends CI_Controller {
         $this->session->set_flashdata('type', 'danger');
       }
 
-      redirect(site_url('ganti_password'));
+      redirect(site_url('me/ganti_password'));
     }
     else {
       $data['message'] = $this->session->flashdata('msg');
