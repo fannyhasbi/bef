@@ -106,7 +106,7 @@ class Admin_model extends CI_Model {
   }
 
   public function getCount(){
-    $q = $this->db->query('SELECT (SELECT COUNT(id) FROM pendaftar) AS pendaftar, (SELECT COUNT(no_peserta) FROM peserta) AS peserta');
+    $q = $this->db->query('SELECT (SELECT COUNT(id) FROM pendaftar) AS pendaftar, (SELECT COUNT(no_peserta) FROM peserta_fix) AS peserta');
     return $q->row();
   }
 

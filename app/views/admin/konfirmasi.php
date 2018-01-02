@@ -59,9 +59,13 @@
                         </a>
                       <?php } ?>
 
-                      <button class="btn btn-danger btn-simple btn-xs" title="Hapus peserta" rel="tooltip" onclick="hapus(<?= $item->refId; ?>)">
-                        <i class="material-icons">close</i> Hapus
-                      </button>
+                      <?php if($this->db->get_where('peserta_fix', ['id_pendaftar' => $item->refId])->num_rows() == 0){ ?>
+                        <button class="btn btn-danger btn-simple btn-xs" title="Hapus peserta" rel="tooltip" onclick="hapus(<?= $item->refId; ?>)">
+                          <i class="material-icons">close</i> Hapus
+                        </button>
+                      <?php } else { ?>
+                        <p>Finalisasi</p>
+                      <?php } ?>
                     </td>
                   </tr>
                 <?php
