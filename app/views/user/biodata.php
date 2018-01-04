@@ -117,7 +117,7 @@
                     <div class='col-md-12'>
                       <div class="form-group">
                       <label class="control-label">Tanggal Lahir</label>
-                        <input type="text" id="datepicker" class="form-control" name="ttl">
+                        <input type="text" id="datepicker" class="form-control" name="ttl" required>
                       </div>
                     </div>
                   </div>
