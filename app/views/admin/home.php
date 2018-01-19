@@ -182,14 +182,29 @@ $konfirmasi = $this->db->query("select count(distinct(id_pendaftar)) as jumlah f
               <tr>
                 <th>SAINTEK</th>
                 <td><?= $r->ipa; ?></td>
+                <td>
+                  <a href="<?= site_url('me/detail/saintek'); ?>" class="btn btn-info btn-simple btn-xs" target="_blank">
+                    <i class="material-icons">info</i> Detail
+                  </a>
+                </td>
               </tr>
               <tr>
                 <th>SOSHUM</th>
                 <td><?= $r->ips; ?></td>
+                <td>
+                  <a href="<?= site_url('me/detail/soshum'); ?>" class="btn btn-info btn-simple btn-xs" target="_blank">
+                    <i class="material-icons">info</i> Detail
+                  </a>
+                </td>
               </tr>
               <tr>
                 <th>IPC</th>
                 <td><?= $r->ipc; ?></td>
+                <td>
+                  <a href="<?= site_url('me/detail/ipc'); ?>" class="btn btn-info btn-simple btn-xs" target="_blank">
+                    <i class="material-icons">info</i> Detail
+                  </a>
+                </td>
               </tr>
           </table>
         </div>

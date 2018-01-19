@@ -201,4 +201,86 @@ class Admin extends CI_Controller {
     redirect(site_url('me/konfirmasi'));
   }
 
+  public function detail($jenis_tiket){
+    $this->cekLogin();
+
+    switch($jenis_tiket){
+      case "saintek":
+        $data['jenis'] = 'saintek';
+        $data['data'] = $this->admin_model->getFinalSaintek();
+        break;
+      case "soshum":
+        $data['jenis'] = 'soshum';
+        $data['data'] = $this->admin_model->getFinalSoshum();
+        break;
+      case "ipc":
+        $data['jenis'] = 'ipc';
+        $data['data'] = $this->admin_model->getFinalIPC();
+        break;
+      default: redirect(site_url('me')); break;
+    }
+
+    $this->load->view('admin/detail_final_excel', $data);
+  }
+
+  public function download($jenis_tiket){
+    $this->cekLogin();
+
+    switch($jenis_tiket){
+      case "saintek":
+        $this->downloadFile("saintek");
+        break;
+      case "soshum":
+        $this->downloadFile("soshum");
+        break;
+      case "ipc":
+        $this->downloadFile("ipc");
+        break;
+      default: redirect(site_url('me')); break;
+    }
+  }
+
+  // --- Download Data
+
+  private function downloadFile($jenis){
+    switch($jenis){
+      case "saintek":
+        $data = $this->admin_model->getFinalSaintek();
+        $filename = "bef_saintek";
+        break;
+      case "soshum":
+        $data = $this->admin_model->getFinalSoshum();
+        $filename = "bef_soshum";
+        break;
+      case "ipc":
+        $data = $this->admin_model->getFinalIPC();
+        $filename = "bef_ipc";
+        break;
+      default:
+        $data = $this->admin_model->getFinalSaintek();
+        $filename = "bef";
+        break;
+    }
+
+    header("Content-type: application/vnd-ms-excel");
+    header("Content-Disposition: attachment; filename=" . $filename . ".xls");
+
+    echo '<h3>Data Peserta BEF</h3>';
+        
+    echo '<table border="1" cellspacing="0" cellpadding="3">';
+    echo '<tr><th>No. Peserta</th><th>Nama</th></tr>';
+
+    foreach($data as $item){
+      echo '<tr>';
+      echo '<td style="font-size: 20px;">' . strtoupper($item->no_peserta_fix) . '</td>';
+      echo '<td style="font-size: 20px;">' . strtoupper(substr($item->nama, 0, 25)) .'</td>';
+      echo '</tr>';
+    }
+
+    echo '</table>';
+  }
+
+
+  // ---- End Download Data
+
 }

@@ -165,4 +165,19 @@ class Admin_model extends CI_Model {
     return $q->row();
   }
 
+  public function getFinalSaintek(){
+    $q = $this->db->query("SELECT * FROM v_final_update WHERE tiket IN (1, 4) AND no_peserta_fix IS NOT NULL ORDER BY no_peserta_fix");
+    return $q->result();
+  }
+
+  public function getFinalSoshum(){
+    $q = $this->db->query("SELECT * FROM v_final_update WHERE tiket IN (2, 5) AND no_peserta_fix IS NOT NULL ORDER BY no_peserta_fix");
+    return $q->result();
+  }
+
+  public function getFinalIPC(){
+    $q = $this->db->query("SELECT * FROM v_final_update WHERE tiket IN (3, 6) AND no_peserta_fix IS NOT NULL ORDER BY no_peserta_fix");
+    return $q->result();
+  }
+
 }

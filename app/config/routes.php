@@ -14,6 +14,8 @@ $route['me/konfirmasi'] = 'admin/konfirmasi';
 $route['me/del-peserta/(:num)'] = 'admin/del_peserta/$1';
 $route['me/res/(:num)'] = 'admin/reset_password/$1';
 $route['me/tolak/(:num)'] = 'admin/tolak/$1';
+$route['me/detail/(:any)'] = 'admin/detail/$1';
+$route['me/download/(:any)'] = 'admin/download/$1';
 
 // Super admin
 $route['sudo'] = 'sudo';
