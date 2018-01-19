@@ -34,6 +34,10 @@ class Admin_model extends CI_Model {
     return $this->db->query("SELECT * FROM v_final_update WHERE MD5(username) = '" . $md_hash ."'");
   }
 
+  public function checkKehadiranTO($id_pendaftar){
+    return $this->db->get_where('kehadiran_to', ['id_pendaftar' => $id_pendaftar]);
+  }
+
   public function addConfirm($id_pendaftar){
     $data = array(
       'id_admin' => $this->session->userdata('id_admin'),
@@ -58,6 +62,14 @@ class Admin_model extends CI_Model {
     else {
       return false;
     }
+  }
+
+  public function addKehadiranTO($id_pendaftar){
+    $data = array(
+      'id_pendaftar' => $id_pendaftar
+    );
+
+    $this->db->insert('kehadiran_to', $data);
   }
 
   public function updatePass($new){

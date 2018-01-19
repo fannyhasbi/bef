@@ -39,13 +39,17 @@
     <div class="row">
       <div class="col-md-12">
         <div class="card">
-          <div class="card-header" data-background-color="green">
-            <h4 class="title">Berhasil Konfirmasi Kehadiran</h4>
+          <div class="card-header" data-background-color="<?= $kehadiran_to > 0 ? 'orange' : 'green'; ?>">
+            <?php if($kehadiran_to > 0){ ?>
+              <h4 class="title">Peserta sudah dikonfirmasi sebelumnya</h4>
+            <?php } else { ?>
+              <h4 class="title">Berhasil Konfirmasi Kehadiran</h4>
+            <?php } ?>
           </div>
           <div class="card-content">
             <div class="row">
               <div class="col-md-4 col-md-offset-4">
-                <img src="<?= base_url().'foto/peserta/'.$profil->foto; ?>">
+                <img src="<?= 'http://pendaftaran.brebesedufair.org/foto/peserta/' . $profil->foto; ?>">
               </div>
             </div>
             <hr/>

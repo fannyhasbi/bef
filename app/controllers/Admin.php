@@ -288,6 +288,12 @@ class Admin extends CI_Controller {
       if($this->admin_model->checkMDPendaftar($this->input->get('key'))->num_rows() > 0){
         $data['profil'] = $this->admin_model->getMDPendaftar($this->input->get('key'));
 
+        $data['kehadiran_to'] = $this->admin_model->checkKehadiranTO($data['profil']->id_pendaftar)->num_rows();
+
+        if(!($data['kehadiran_to'] > 0)){
+          $this->admin_model->addKehadiranTO($data['profil']->id_pendaftar);
+        }
+
         $this->load->view('admin/konfirmasi_kehadiran', $data);
       }
       else {
