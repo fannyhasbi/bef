@@ -283,4 +283,20 @@ class Admin extends CI_Controller {
 
   // ---- End Download Data
 
+  public function konfirmasi_kehadiran(){
+    if($this->input->get('key')){
+      if($this->admin_model->checkMDPendaftar($this->input->get('key'))->num_rows() > 0){
+        $data['profil'] = $this->admin_model->getMDPendaftar($this->input->get('key'));
+
+        $this->load->view('admin/konfirmasi_kehadiran', $data);
+      }
+      else {
+        echo "Peserta tidak ditemukan";
+      }
+    }
+    else {
+      show_404();
+    }
+  }
+
 }

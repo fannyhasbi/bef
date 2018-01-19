@@ -29,6 +29,11 @@ class Admin_model extends CI_Model {
     return $this->db->get_where('admin', ['id' => $id]);
   }
 
+  public function checkMDPendaftar($md_hash){
+    $md_hash = $this->purify($md_hash);
+    return $this->db->query("SELECT * FROM v_final_update WHERE MD5(username) = '" . $md_hash ."'");
+  }
+
   public function addConfirm($id_pendaftar){
     $data = array(
       'id_admin' => $this->session->userdata('id_admin'),
@@ -178,6 +183,12 @@ class Admin_model extends CI_Model {
   public function getFinalIPC(){
     $q = $this->db->query("SELECT * FROM v_final_update WHERE tiket IN (3, 6) AND no_peserta_fix IS NOT NULL ORDER BY no_peserta_fix");
     return $q->result();
+  }
+
+  public function getMDPendaftar($md_hash){
+    $md_hash = $this->purify($md_hash);
+    $q = $this->db->query("SELECT * FROM v_final_update WHERE MD5(username) = '" . $md_hash ."'");
+    return $q->row();
   }
 
 }
