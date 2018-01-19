@@ -63,6 +63,23 @@ class Admin_model extends CI_Model {
     else
       return false;
   }
+  
+  
+  // Urgent
+  public function resetPassPendaftar($id_pendaftar){
+    $new = "12345678";
+    $new = password_hash($new, PASSWORD_BCRYPT);
+    $this->db->where('id', $id_pendaftar);
+    $this->db->update('pendaftar', ['password' => $new]);
+  }
+  
+  public function tolakPendaftar($id_pendaftar){
+      $this->db->where('id', $id_pendaftar);
+      $this->db->update('pendaftar', ['bukti' => null]);
+  }
+  
+  
+  // end urgent
 
   public function deleteConfirm($id_pendaftar){
     $this->db->where('id_pendaftar', $id_pendaftar);
@@ -96,7 +113,7 @@ class Admin_model extends CI_Model {
   
   public function getBukti(){
     // SELECT id AS refId, username, nama, tiket, bukti, IF((SELECT COUNT(id) FROM konfirmasi WHERE id_pendaftar = refId) > 0, 1, 0) AS konfirmasi FROM pendaftar WHERE saved = 1 ORDER BY konfirmasi
-    $q = $this->db->get("v_konfirmasi");
+    $q = $this->db->get("v_konfirmasi_new");
     return $q->result();
   }
 
@@ -111,12 +128,12 @@ class Admin_model extends CI_Model {
   }
 
   public function getGrafikPeserta(){
-    $q = $this->db->query("SELECT DATE_FORMAT(c.datefield, '%y-%m-%e') AS tanggal, COUNT(p.no_peserta) AS jumlah FROM peserta p INNER JOIN konfirmasi k ON p.id_pendaftar = k.id_pendaftar RIGHT JOIN calendar c ON DATE(k.tgl) = c.datefield WHERE c.datefield BETWEEN (SELECT MIN(c.datefield)) AND NOW() GROUP BY tanggal");
+    $q = $this->db->query("SELECT DATE_FORMAT(c.datefield, '%y-%m-%d') AS tanggal, COUNT(p.no_peserta) AS jumlah FROM peserta p INNER JOIN konfirmasi k ON p.id_pendaftar = k.id_pendaftar RIGHT JOIN calendar c ON DATE(k.tgl) = c.datefield WHERE c.datefield BETWEEN (SELECT MIN(c.datefield)) AND NOW() GROUP BY tanggal");
     return $q->result();
   }
 
   public function getGrafikPendaftar(){
-    $q = $this->db->query("SELECT DATE_FORMAT(c.datefield, '%y-%m-%e') AS tanggal, COUNT(d.id) AS jumlah FROM pendaftar d RIGHT JOIN calendar c ON DATE(d.tgl) = c.datefield WHERE c.datefield BETWEEN (SELECT MIN(c.datefield)) AND NOW() GROUP BY tanggal");
+    $q = $this->db->query("SELECT DATE_FORMAT(c.datefield, '%y-%m-%d') AS tanggal, COUNT(d.id) AS jumlah FROM pendaftar d RIGHT JOIN calendar c ON DATE(d.tgl) = c.datefield WHERE c.datefield BETWEEN (SELECT MIN(c.datefield)) AND NOW() GROUP BY tanggal");
     return $q->result();
   }
 

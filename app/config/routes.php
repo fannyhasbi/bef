@@ -1,16 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-// User
-$route['dashboard'] = 'user';
-$route['daftar']= 'user/daftar';
-$route['masuk'] = 'user/login';
-$route['keluar']= 'user/logout';
-$route['save'] = 'user/save';
-$route['pay'] = 'user/pay';
-$route['profil'] = 'user/profil';
-$route['ganti_password'] = 'user/ganti_pass';
-$route['final'] = 'user/finalisasi';
+$route['keluar'] = 'admin/logout';
 
 // Admin
 $route['admin'] = 'home/notfound';
@@ -21,6 +12,8 @@ $route['me/confirm/(:num)'] = 'admin/confirm/$1';
 /*$route['me/cancel/(:num)'] = 'admin/cancel/$1';*/
 $route['me/konfirmasi'] = 'admin/konfirmasi';
 $route['me/del-peserta/(:num)'] = 'admin/del_peserta/$1';
+$route['me/res/(:num)'] = 'admin/reset_password/$1';
+$route['me/tolak/(:num)'] = 'admin/tolak/$1';
 
 // Super admin
 $route['sudo'] = 'sudo';
@@ -46,6 +39,8 @@ $route['sudo/del-prodi/(:any)'] = 'sudo/del_prodi/$1';
 $route['api/'] = 'home/notfound';
 $route['api/v1'] = 'home/notfound';
 $route['api/v1/prodi'] = 'api/prodi';
+$route['api/v1/ptn'] = 'api/ptn';
+$route['api/v1/resize'] = 'api/resize';
 
 
 $route['default_controller'] = 'home';

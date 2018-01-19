@@ -35,7 +35,7 @@
                   <select class="form-control" name="ptn">
                     <?php foreach($ptn as $item): ?>
 
-                      <option value="<?= $item->kode; ?>"><?= $item->nama; ?></option>
+                      <option value="<?= $item->kode; ?>"><?= $item->kode.' - '.$item->nama; ?></option>
 
                     <?php endforeach; ?>
                   </select>

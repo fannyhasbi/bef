@@ -17,6 +17,7 @@
                   <th>Username</th>
                   <th>Nama</th>
                   <th>Jenis</th>
+                  <th>Telp.</th>
                   <th>Action</th>
                 </tr>
               </thead>
@@ -44,13 +45,18 @@
                       }
                       ?>
                     </td>
+                    <td><?= $item->telp == null ? '---' : $item->telp; ?></td>
                     <td class="text-center">
                       <?php if($item->konfirmasi == 1){ ?>
                         
                       <?php } else { ?>
                         <?php if($item->bukti != null){ ?>
-                          <a href="<?= base_url('foto/bukti/'. $item->bukti); ?>" rel="tooltip" title="Lihat bukti" class="btn btn-info btn-simple btn-xs" target="_blank">
+                          <a href="<?= 'https://pendaftaran.brebesedufair.org/foto/bukti/'. $item->bukti; ?>" rel="tooltip" title="Lihat bukti" class="btn btn-info btn-simple btn-xs" target="_blank">
                             <i class="material-icons">search</i> Lihat
+                          </a>
+                          
+                          <a href="<?= base_url('me/tolak/'. $item->refId); ?>" rel="tooltip" title="Tolak bukti" class="btn btn-warning btn-simple btn-xs">
+                            <i class="material-icons">block</i> Tolak
                           </a>
                         <?php } ?>
 
@@ -66,6 +72,10 @@
                       <?php } else { ?>
                         <p>Finalisasi</p>
                       <?php } ?>
+                      
+                      <a href="<?= base_url('me/res/'. $item->refId); ?>" rel="tooltip" title="Konfirmasi" class="btn btn-warning btn-simple btn-xs">
+                        <i class="material-icons">lock_open</i> Reset
+                      </a>
                     </td>
                   </tr>
                 <?php

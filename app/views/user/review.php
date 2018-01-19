@@ -4,8 +4,8 @@
     <div class="col-md-12">
       <div class="card">
         <div class="card-header" data-background-color="purple">
-          <h4 class="title">Lengkapi Pilihan Program Studi</h4>
-          <p class="category">Silahkan lengkapi data-data dibawah ini.</p>
+          <h4 class="title">Selesai</h4>
+          <p class="category">Silahkan lanjutkan mencetak kartu.</p>
         </div>
         <div class="card-content">
           <div class="row">

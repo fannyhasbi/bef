@@ -29,6 +29,11 @@ class Admin extends CI_Controller {
     if(!$this->session->userdata('login_admin'))
       show_404();
   }
+  
+  public function logout(){
+      $this->session->sess_destroy();
+      redirect(site_url());
+  }
 
   public function login(){
     if($this->session->userdata('login'))
@@ -155,6 +160,42 @@ class Admin extends CI_Controller {
         $this->session->set_flashdata('msg', 'Terjadi kesalahan, gagal menghapus.');
         $this->session->set_flashdata('type', 'danger');
       }
+    }
+
+    redirect(site_url('me/konfirmasi'));
+  }
+  
+  
+  // urgent
+  public function reset_password($id_pendaftar){
+    $this->cekLogin();
+
+    if($this->admin_model->checkIdPendaftar($id_pendaftar)->num_rows() > 0){
+      $this->admin_model->resetPassPendaftar($id_pendaftar);
+      
+      $this->session->set_flashdata('msg', 'Berhasil. Password baru: 12345678');
+      $this->session->set_flashdata('type', 'success');
+    }
+    else {
+      $this->session->set_flashdata('msg', 'Tidak ditemukan pendaftar.');
+      $this->session->set_flashdata('type', 'danger');
+    }
+
+    redirect(site_url('me/konfirmasi'));
+  }
+  
+  public function tolak($id_pendaftar){
+    $this->cekLogin();
+
+    if($this->admin_model->checkIdPendaftar($id_pendaftar)->num_rows() > 0){
+      $this->admin_model->tolakPendaftar($id_pendaftar);
+      
+      $this->session->set_flashdata('msg', 'Berhasil menolak bukti');
+      $this->session->set_flashdata('type', 'success');
+    }
+    else {
+      $this->session->set_flashdata('msg', 'Tidak ditemukan pendaftar.');
+      $this->session->set_flashdata('type', 'danger');
     }
 
     redirect(site_url('me/konfirmasi'));
