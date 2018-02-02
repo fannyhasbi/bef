@@ -55,7 +55,11 @@ $q = "select
   ) as ipc_lunas,
   (select count(no_peserta) from p_ipa) as ipa,
   (select count(no_peserta) from p_ips) as ips,
-  (select count(no_peserta) from p_ipc) as ipc";
+  (select count(no_peserta) from p_ipc) as ipc,
+  (select count(distinct(id_pendaftar)) from kehadiran_to) as hadir_to,
+  (select count(distinct(id_pendaftar)) from kehadiran_ts) as hadir_ts,
+  (select count(distinct(id_pendaftar)) from kehadiran_expo) as hadir_expo
+  ";
 
 $r = $this->db->query($q)->row();
 
@@ -63,6 +67,54 @@ $konfirmasi = $this->db->query("select count(distinct(id_pendaftar)) as jumlah f
 ?>
 <div class="container-fluid">
   <div class="row">
+    <div class="col-sm-4">
+      <div class="card card-stats">
+        <div class="card-header" data-background-color="red">
+          <i class="material-icons">content_paste</i>
+        </div>
+        <div class="card-content">
+          <p class="category">Kehadiran Try Out</p>
+          <h3 class="title"><?= $r->hadir_to ?> <small>peserta</small></h3>
+        </div>
+        <div class="card-footer">
+          <div class="stats">
+            <i class="material-icons">update</i> Beberapa menit yang lalu - <a href="<?= site_url('me/download-hadir/tryout'); ?>" class="text-success">Download</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-4">
+      <div class="card card-stats">
+        <div class="card-header" data-background-color="blue">
+          <i class="material-icons">keyboard_voice</i>
+        </div>
+        <div class="card-content">
+          <p class="category">Kehadiran Talk Show</p>
+          <h3 class="title"><?= $r->hadir_ts ?> <small>peserta</small></h3>
+        </div>
+        <div class="card-footer">
+          <div class="stats">
+            <i class="material-icons">update</i> Beberapa menit yang lalu - <a href="<?= site_url('me/download-hadir/talkshow'); ?>" class="text-success">Download</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-4">
+      <div class="card card-stats">
+        <div class="card-header" data-background-color="default">
+          <i class="material-icons">content_paste</i>
+        </div>
+        <div class="card-content">
+          <p class="category">Kehadiran Expo</p>
+          <h3 class="title"><?= $r->hadir_expo ?> <small>peserta</small></h3>
+        </div>
+        <div class="card-footer">
+          <div class="stats">
+            <i class="material-icons">update</i> Beberapa menit yang lalu - <a href="<?= site_url('me/download-hadir/expo'); ?>" class="text-success">Download</a>
+          </div>
+        </div>
+      </div>
+    </div>
     <div class="col-sm-4">
       <div class="card card-stats">
         <div class="card-header" data-background-color="orange">
