@@ -280,13 +280,66 @@ class Admin extends CI_Controller {
     echo '</table>';
   }
 
+  public function download_hadir($acara){
+    switch($acara){
+      case "tryout":
+        $data = $this->admin_model->getFinalTryOut();
+        $filename = "bef_tryout";
+        $title = "TRY OUT";
+        break;
+      case "talkshow":
+        $data = $this->admin_model->getFinalTalkshow();
+        $filename = "bef_talkshow";
+        $title = "TALKSHOW";
+        break;
+      case "expo":
+        $data = $this->admin_model->getFinalExpo();
+        $filename = "bef_expo";
+        $title = "EXPO";
+        break;
+      default:
+        $data = $this->admin_model->getFinalTryOut();
+        $filename = "bef";
+        $title = "TRY OUT";
+        break;
+    }
+
+    header("Content-type: application/vnd-ms-excel");
+    header("Content-Disposition: attachment; filename=" . $filename . ".xls");
+
+    echo '<h3>DATA KEHADIRAN PESERTA '. $title .' BEF 2018</h3>';
+        
+    echo '<table border="1" cellspacing="0" cellpadding="3">';
+    echo '<tr><th>NO. PESERTA</th><th>NAMA</th><th>TIKET</th><th>SEKOLAH</th><th>KEDATANGAN</th></tr>';
+
+    foreach($data as $item){
+      echo '<tr>';
+      echo '<td>' . $item->no_peserta_ref . '</td>';
+      echo '<td>' . $item->nama_lengkap .'</td>';
+      echo '<td>' . $item->tiket .'</td>';
+      echo '<td>' . $item->sekolah .'</td>';
+      echo '<td>' . $item->kedatangan .'</td>';
+      echo '</tr>';
+    }
+
+    echo '</table>';
+  }
 
   // ---- End Download Data
 
   public function konfirmasi_kehadiran(){
+    show_404();
+    
+    /* Remove this if necessary
     if($this->input->get('key')){
       if($this->admin_model->checkMDPendaftar($this->input->get('key'))->num_rows() > 0){
         $data['profil'] = $this->admin_model->getMDPendaftar($this->input->get('key'));
+
+        $data['kehadiran_to'] = $this->admin_model->checkKehadiranTO($data['profil']->id_pendaftar)->num_rows();
+
+        if(!($data['kehadiran_to'] > 0)){
+          $this->admin_model->addKehadiranTO($data['profil']->id_pendaftar);
+        }
 
         $this->load->view('admin/konfirmasi_kehadiran', $data);
       }
@@ -296,7 +349,7 @@ class Admin extends CI_Controller {
     }
     else {
       show_404();
-    }
+    } */
   }
 
 }

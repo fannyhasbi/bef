@@ -34,6 +34,10 @@ class Admin_model extends CI_Model {
     return $this->db->query("SELECT * FROM v_final_update WHERE MD5(username) = '" . $md_hash ."'");
   }
 
+  public function checkKehadiranTO($id_pendaftar){
+    return $this->db->get_where('kehadiran_to', ['id_pendaftar' => $id_pendaftar]);
+  }
+
   public function addConfirm($id_pendaftar){
     $data = array(
       'id_admin' => $this->session->userdata('id_admin'),
@@ -58,6 +62,14 @@ class Admin_model extends CI_Model {
     else {
       return false;
     }
+  }
+
+  public function addKehadiranTO($id_pendaftar){
+    $data = array(
+      'id_pendaftar' => $id_pendaftar
+    );
+
+    $this->db->insert('kehadiran_to', $data);
   }
 
   public function updatePass($new){
@@ -133,12 +145,12 @@ class Admin_model extends CI_Model {
   }
 
   public function getGrafikPeserta(){
-    $q = $this->db->query("SELECT DATE_FORMAT(c.datefield, '%y-%m-%d') AS tanggal, COUNT(p.no_peserta) AS jumlah FROM peserta p INNER JOIN konfirmasi k ON p.id_pendaftar = k.id_pendaftar RIGHT JOIN calendar c ON DATE(k.tgl) = c.datefield WHERE c.datefield BETWEEN (SELECT MIN(c.datefield)) AND NOW() GROUP BY tanggal");
+    $q = $this->db->query("SELECT DATE_FORMAT(c.datefield, '%y-%m-%d') AS tanggal, COUNT(p.no_peserta) AS jumlah FROM peserta p INNER JOIN konfirmasi k ON p.id_pendaftar = k.id_pendaftar RIGHT JOIN calendar c ON DATE(k.tgl) = c.datefield WHERE c.datefield BETWEEN (SELECT MIN(c.datefield)) AND '2018-01-21' GROUP BY tanggal");
     return $q->result();
   }
 
   public function getGrafikPendaftar(){
-    $q = $this->db->query("SELECT DATE_FORMAT(c.datefield, '%y-%m-%d') AS tanggal, COUNT(d.id) AS jumlah FROM pendaftar d RIGHT JOIN calendar c ON DATE(d.tgl) = c.datefield WHERE c.datefield BETWEEN (SELECT MIN(c.datefield)) AND NOW() GROUP BY tanggal");
+    $q = $this->db->query("SELECT DATE_FORMAT(c.datefield, '%y-%m-%d') AS tanggal, COUNT(d.id) AS jumlah FROM pendaftar d RIGHT JOIN calendar c ON DATE(d.tgl) = c.datefield WHERE c.datefield BETWEEN (SELECT MIN(c.datefield)) AND '2018-01-21' GROUP BY tanggal");
     return $q->result();
   }
 
@@ -182,6 +194,48 @@ class Admin_model extends CI_Model {
 
   public function getFinalIPC(){
     $q = $this->db->query("SELECT * FROM v_final_update WHERE tiket IN (3, 6) AND no_peserta_fix IS NOT NULL ORDER BY no_peserta_fix");
+    return $q->result();
+  }
+
+  public function getFinalTryOut(){
+    /*
+    SELECT f.no_peserta AS "NO. PESERTA",
+      SUBSTR(UPPER(d.nama), 1, 25) AS "NAMA",
+      (
+        CASE tiket
+          WHEN 1 THEN 'SILVER IPA'
+          WHEN 2 THEN 'SILVER IPS'
+          WHEN 3 THEN 'SILVER IPC'
+          WHEN 4 THEN 'GOLD IPA'
+          WHEN 5 THEN 'GOLD IPS'
+          WHEN 6 THEN 'GOLD IPC'
+          ELSE 'UNKNOWN'
+        END
+      ) AS tiket,
+      UPPER(p.sekolah) AS "SEKOLAH",
+      DATE_FORMAT(k.tgl, '%H:%i:%s') AS "KEDATANGAN"
+    FROM pendaftar d
+    LEFT JOIN peserta p
+      ON d.id = p.id_pendaftar
+    LEFT JOIN peserta_fix f
+      ON d.id = f.id_pendaftar
+    RIGHT JOIN kehadiran_to k
+      ON d.id = k.id_pendaftar
+
+    ORDER BY k.tgl ASC, f.no_peserta ASC
+    */
+
+    $q = $this->db->query("SELECT f.no_peserta AS no_peserta_ref, SUBSTR(UPPER(d.nama), 1, 25) AS nama_lengkap, (CASE tiket WHEN 1 THEN 'SILVER IPA' WHEN 2 THEN 'SILVER IPS' WHEN 3 THEN 'SILVER IPC' WHEN 4 THEN 'GOLD IPA' WHEN 5 THEN 'GOLD IPS' WHEN 6 THEN 'GOLD IPC' ELSE 'UNKNOWN' END) AS tiket, UPPER(p.sekolah) AS sekolah, DATE_FORMAT(k.tgl, '%H:%i:%s') AS kedatangan FROM pendaftar d LEFT JOIN peserta p ON d.id = p.id_pendaftar LEFT JOIN peserta_fix f ON d.id = f.id_pendaftar RIGHT JOIN kehadiran_to k ON d.id = k.id_pendaftar ORDER BY k.tgl ASC, f.no_peserta ASC");
+    return $q->result();
+  }
+
+  public function getFinalTalkshow(){
+    $q = $this->db->query("SELECT f.no_peserta AS no_peserta_ref, SUBSTR(UPPER(d.nama), 1, 25) AS nama_lengkap, (CASE tiket WHEN 1 THEN 'SILVER IPA' WHEN 2 THEN 'SILVER IPS' WHEN 3 THEN 'SILVER IPC' WHEN 4 THEN 'GOLD IPA' WHEN 5 THEN 'GOLD IPS' WHEN 6 THEN 'GOLD IPC' ELSE 'UNKNOWN' END) AS tiket, UPPER(p.sekolah) AS sekolah, DATE_FORMAT(k.tgl, '%H:%i:%s') AS kedatangan FROM pendaftar d LEFT JOIN peserta p ON d.id = p.id_pendaftar LEFT JOIN peserta_fix f ON d.id = f.id_pendaftar RIGHT JOIN kehadiran_ts k ON d.id = k.id_pendaftar ORDER BY k.tgl ASC, f.no_peserta ASC");
+    return $q->result();
+  }
+
+  public function getFinalExpo(){
+    $q = $this->db->query("SELECT f.no_peserta AS no_peserta_ref, SUBSTR(UPPER(d.nama), 1, 25) AS nama_lengkap, (CASE tiket WHEN 1 THEN 'SILVER IPA' WHEN 2 THEN 'SILVER IPS' WHEN 3 THEN 'SILVER IPC' WHEN 4 THEN 'GOLD IPA' WHEN 5 THEN 'GOLD IPS' WHEN 6 THEN 'GOLD IPC' ELSE 'UNKNOWN' END) AS tiket, UPPER(p.sekolah) AS sekolah, DATE_FORMAT(k.tgl, '%H:%i:%s') AS kedatangan FROM pendaftar d LEFT JOIN peserta p ON d.id = p.id_pendaftar LEFT JOIN peserta_fix f ON d.id = f.id_pendaftar RIGHT JOIN kehadiran_expo k ON d.id = k.id_pendaftar ORDER BY k.tgl ASC, f.no_peserta ASC");
     return $q->result();
   }
 
